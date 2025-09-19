@@ -8,6 +8,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Textarea } from "@/components/ui/textarea"
 import { Label } from "@/components/ui/label"
 import { Mic, Upload, Volume2, Brain, BookOpen, FileText } from "lucide-react"
+import "@/styles/olai2.css"
 
 export default function AnalyzePage() {
   const { t } = useLanguage()
@@ -29,10 +30,7 @@ export default function AnalyzePage() {
       })
 
       const data = await res.json()
-
-      if (!res.ok) {
-        throw new Error(data.error || "Failed to analyze poem")
-      }
+      if (!res.ok) throw new Error(data.error || "Failed to analyze poem")
 
       setAnalysisResult(data)
     } catch (err: any) {
@@ -43,14 +41,8 @@ export default function AnalyzePage() {
     }
   }
 
-  const handleVoiceInput = () => {
-    alert("Voice input feature will be implemented with Web Speech API")
-  }
-
-  const handleFileUpload = () => {
-    alert("File upload feature for Vattezhuthu will be implemented")
-  }
-
+  const handleVoiceInput = () => alert("Voice input feature will be implemented with Web Speech API")
+  const handleFileUpload = () => alert("File upload feature for Vattezhuthu will be implemented")
   const playAudio = (text: string, language: "ta" | "en") => {
     if ("speechSynthesis" in window) {
       const utterance = new SpeechSynthesisUtterance(text)
@@ -62,15 +54,15 @@ export default function AnalyzePage() {
   }
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-olai bg-cover bg-center text-[#3d2f1b] font-olai">
       <Navigation />
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="max-w-4xl mx-auto">
-          <h1 className="text-3xl font-bold text-foreground mb-8 text-center">{t("analyzer.title")}</h1>
+          <h1 className="text-3xl font-bold mb-8 text-center text-[#6b4f27]">{t("analyzer.title")}</h1>
 
           {/* Input Section */}
-          <Card className="mb-8">
+          <Card className="mb-8 card-olai">
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <FileText className="h-5 w-5" />
@@ -85,17 +77,17 @@ export default function AnalyzePage() {
                   placeholder={t("analyzer.input.placeholder")}
                   value={poemText}
                   onChange={(e) => setPoemText(e.target.value)}
-                  className="min-h-32 mt-2"
+                  className="min-h-32 mt-2 bg-[#fff8dc]/50 border-[#a1824a]"
                 />
               </div>
 
               <div className="flex flex-wrap gap-3">
-                <Button variant="outline" onClick={handleVoiceInput} className="flex items-center gap-2 bg-transparent">
+                <Button variant="outline" onClick={handleVoiceInput} className="flex items-center gap-2 bg-transparent text-[#3d2f1b] border-[#a1824a] hover:bg-[#a1824a]/10">
                   <Mic className="h-4 w-4" />
                   {t("analyzer.mic")}
                 </Button>
 
-                <Button variant="outline" onClick={handleFileUpload} className="flex items-center gap-2 bg-transparent">
+                <Button variant="outline" onClick={handleFileUpload} className="flex items-center gap-2 bg-transparent text-[#3d2f1b] border-[#a1824a] hover:bg-[#a1824a]/10">
                   <Upload className="h-4 w-4" />
                   {t("analyzer.upload.text")}
                 </Button>
@@ -104,12 +96,12 @@ export default function AnalyzePage() {
               <Button
                 onClick={handleAnalyze}
                 disabled={!poemText.trim() || isAnalyzing}
-                className="w-full bg-primary hover:bg-primary/90 text-primary-foreground"
+                className="w-full bg-[#a1824a] hover:bg-[#8f6f3d] text-[#fff8dc]"
               >
                 {isAnalyzing ? "Analyzing..." : t("analyzer.analyze")}
               </Button>
 
-              {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
+              {error && <p className="text-red-600 text-sm mt-2">{error}</p>}
             </CardContent>
           </Card>
 
@@ -117,7 +109,7 @@ export default function AnalyzePage() {
           {analysisResult && (
             <div className="space-y-6">
               {/* Simplified Versions */}
-              <Card>
+              <Card className="card-olai">
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2">
                     <BookOpen className="h-5 w-5" />
@@ -125,46 +117,31 @@ export default function AnalyzePage() {
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-6">
-                  <div>
-                    <div className="flex items-center justify-between mb-3">
-                      <h3 className="font-semibold text-lg">{t("output.tamil")}</h3>
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        onClick={() => playAudio(analysisResult.simplifiedTamil, "ta")}
-                        className="flex items-center gap-2"
-                      >
-                        <Volume2 className="h-4 w-4" />
-                        {t("output.listen.tamil")}
-                      </Button>
-                    </div>
-                    <p className="text-muted-foreground bg-secondary/30 p-4 rounded-lg">
-                      {analysisResult.simplifiedTamil}
-                    </p>
-                  </div>
-
-                  <div>
-                    <div className="flex items-center justify-between mb-3">
-                      <h3 className="font-semibold text-lg">{t("output.english")}</h3>
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        onClick={() => playAudio(analysisResult.simplifiedEnglish, "en")}
-                        className="flex items-center gap-2"
-                      >
-                        <Volume2 className="h-4 w-4" />
-                        {t("output.listen.english")}
-                      </Button>
-                    </div>
-                    <p className="text-muted-foreground bg-secondary/30 p-4 rounded-lg">
-                      {analysisResult.simplifiedEnglish}
-                    </p>
-                  </div>
+                  {["Tamil", "English"].map((lang) => {
+                    const text = lang === "Tamil" ? analysisResult.simplifiedTamil : analysisResult.simplifiedEnglish
+                    return (
+                      <div key={lang}>
+                        <div className="flex items-center justify-between mb-3">
+                          <h3 className="font-semibold text-lg">{t(`output.${lang.toLowerCase()}`)}</h3>
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={() => playAudio(text, lang === "Tamil" ? "ta" : "en")}
+                            className="flex items-center gap-2 border-[#a1824a] text-[#3d2f1b] hover:bg-[#a1824a]/10"
+                          >
+                            <Volume2 className="h-4 w-4" />
+                            {t(`output.listen.${lang.toLowerCase()}`)}
+                          </Button>
+                        </div>
+                        <p className="text-[#3d2f1b] bg-[#fff8dc]/50 p-4 rounded-lg">{text}</p>
+                      </div>
+                    )
+                  })}
                 </CardContent>
               </Card>
 
               {/* Ilakkanam Insights */}
-              <Card>
+              <Card className="card-olai">
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2">
                     <Brain className="h-5 w-5" />
@@ -174,37 +151,19 @@ export default function AnalyzePage() {
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="p-4 bg-secondary/30 rounded-lg">
-                      <h4 className="font-semibold mb-2">{t("ilakkanam.ezuthu")}</h4>
-                      <p className="text-sm text-muted-foreground">{analysisResult.ilakkanam.ezuthu}</p>
-                    </div>
-
-                    <div className="p-4 bg-secondary/30 rounded-lg">
-                      <h4 className="font-semibold mb-2">{t("ilakkanam.sol")}</h4>
-                      <p className="text-sm text-muted-foreground">{analysisResult.ilakkanam.sol}</p>
-                    </div>
-
-                    <div className="p-4 bg-secondary/30 rounded-lg">
-                      <h4 className="font-semibold mb-2">{t("ilakkanam.porul")}</h4>
-                      <p className="text-sm text-muted-foreground">{analysisResult.ilakkanam.porul}</p>
-                    </div>
-
-                    <div className="p-4 bg-secondary/30 rounded-lg">
-                      <h4 className="font-semibold mb-2">{t("ilakkanam.yaappu")}</h4>
-                      <p className="text-sm text-muted-foreground">{analysisResult.ilakkanam.yaappu}</p>
-                    </div>
-
-                    <div className="p-4 bg-secondary/30 rounded-lg md:col-span-2">
-                      <h4 className="font-semibold mb-2">{t("ilakkanam.ani")}</h4>
-                      <p className="text-sm text-muted-foreground">{analysisResult.ilakkanam.ani}</p>
-                    </div>
+                    {Object.entries(analysisResult.ilakkanam).map(([key, value]: any) => (
+                      <div key={key} className="p-4 bg-[#fff8dc]/50 rounded-lg">
+                        <h4 className="font-semibold mb-2">{t(`ilakkanam.${key}`)}</h4>
+                        <p className="text-sm text-[#3d2f1b]">{value}</p>
+                      </div>
+                    ))}
                   </div>
 
                   <div className="flex justify-center pt-4">
                     <Button
                       variant="outline"
                       onClick={() => playAudio("இலக்கணப் பகுப்பாய்வு முடிந்தது", "ta")}
-                      className="flex items-center gap-2"
+                      className="flex items-center gap-2 border-[#a1824a] text-[#3d2f1b] hover:bg-[#a1824a]/10"
                     >
                       <Volume2 className="h-4 w-4" />
                       {t("ilakkanam.listen")}

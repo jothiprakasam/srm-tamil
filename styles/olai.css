@@ -1,0 +1,63 @@
+/* Palm Leaf Background */
+.bg-olai {
+  background-image: url('/olai.png'); /* add your palm leaf texture */
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+/* Tamil + Classical font */
+.font-olai {
+  font-family: 'Noto Serif Tamil', 'Merriweather', serif;
+}
+
+/* Scroll Card Styling */
+.card-olai {
+  background-color: #f7f1d0;
+  border: 1px solid #c9b88a;
+  box-shadow: 0 4px 6px rgba(107, 79, 39, 0.3);
+  border-radius: 0; /* make rectangular like palm leaf */
+  position: relative;
+  padding: 1rem;
+}
+
+/* Top & Bottom Bands */
+.card-olai::before,
+.card-olai::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 6px;
+  background-color: #c2a96f;
+}
+
+.card-olai::before {
+  top: 0;
+}
+
+.card-olai::after {
+  bottom: 0;
+}
+
+/* Thread Holes */
+.card-olai .card-thread::before,
+.card-olai .card-thread::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  width: 10px;
+  height: 10px;
+  background: #6b4f27;
+  border-radius: 50%;
+  transform: translateY(-50%);
+}
+
+.card-olai .card-thread::before {
+  left: 8px;
+}
+
+.card-olai .card-thread::after {
+  right: 8px;
+}
+
