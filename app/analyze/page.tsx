@@ -76,17 +76,25 @@ export default function AnalyzePage() {
   const handleFileUpload = () => alert("File upload feature for Vattezhuthu will be implemented")
 const playAudio = async (text: string, language: "ta" | "en") => {
   try {
-    const res = await fetch("http://localhost:5000/tts", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ text }),
-    });
+    if (language === "ta") {
+      // Tamil TTS via your local server
+      const res = await fetch("http://localhost:5000/tts", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ text }),
+      });
 
-    const data = await res.json();
-    if (!res.ok || !data.audio) throw new Error(data.error || "No audio returned");
+      const data = await res.json();
+      if (!res.ok || !data.audio) throw new Error(data.error || "No audio returned");
 
-    const audio = new Audio(`data:audio/wav;base64,${data.audio}`);
-    audio.play();
+      const audio = new Audio(`data:audio/wav;base64,${data.audio}`);
+      audio.play();
+    } else {
+      // English TTS using Web Speech API
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.lang = "en-US";
+      speechSynthesis.speak(utterance);
+    }
   } catch (err: any) {
     console.error("TTS playback error:", err);
     alert("Audio playback failed: " + err.message);
