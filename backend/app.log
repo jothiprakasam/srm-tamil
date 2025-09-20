@@ -1,0 +1,967 @@
+2025-09-20 17:24:51,882 [INFO] Starting Flask server on port 8000...
+2025-09-20 17:24:51,940 [WARNING]  * Debugger is active!
+2025-09-20 17:24:51,963 [INFO]  * Debugger PIN: 142-604-067
+2025-09-20 17:24:54,311 [INFO] 127.0.0.1 - - [20/Sep/2025 17:24:54] "OPTIONS /analyze-poem HTTP/1.1" 200 -
+2025-09-20 17:24:54,315 [INFO] Received /analyze-poem request: {'prompt': 'காற்றில் கரையும் அன்பு\nகாற்று நின்ற பின்பு,\nமண்ணில் என்னோடு கரைய,\nகாதல் தீயில் எரிய,\nநான் உன்னில் மறைய வேண்டும்.'}
+2025-09-20 17:24:54,316 [DEBUG] Sending prompt to Gemini: 
+You are a Tamil literary expert.
+Analyze the following poem and return ONLY valid JSON in this structure:
+
+{
+  "simplifiedTamil": "string",
+  "simplifiedEnglish": "string",
+  "ilakkanam": {
+    "ezuthu": "string",
+    "sol": "string",
+    "porul": "string",
+    "yaappu": "string",
+    "ani": "string"
+  }
+}
+
+Poem:
+"""காற்றில் கரையும் அன்பு
+காற்று நின்ற பின்பு,
+மண்ணில் என்னோடு கரைய,
+காதல் தீயில் எரிய,
+நான் உன்னில் மறைய வேண்டும்."""
+
+2025-09-20 17:25:15,572 [DEBUG] Gemini response content: {
+  "simplifiedTamil": "காற்றில் கரைந்து போகும் அன்பு, காற்று அடங்கிய பின்னும், மண்ணில் என்னுடன் கலந்து, காதல் எனும் தீயில் எரிந்து, நான் உன்னுடன் முழுமையாக ஒன்றி மறைய வேண்டும்.",
+  "simplifiedEnglish": "Love that dissolves in the wind. After the wind ceases, I wish to dissolve with me in the earth, burn in the fire of love, and completely disappear into you.",
+  "ilakkanam": {
+    "ezuthu": "The poem primarily utilizes simple, commonly used Tamil letters (Uyirmei letters). There's a subtle use of alliteration (மோனை) in phrases like 'காற்றில் கரையும்', 'காதல் கரைய' and assonance (எதுகை) in 'கரையும்', 'எரிய', 'மறைய', contributing to the poem's sonic appeal.",
+    "sol": "The vocabulary is direct and emotionally charged, combining nouns (அன்பு, காற்று, மண், காதல், தீ), verbs (கரையும், நின்ற, கரைய, எரிய, மறைய வேண்டும்), and particles (பின்பு, இல்). These choices create vivid imagery and convey deep emotional longing effectively.",
+    "porul": "This poem falls under அகப்பொருள் (love theme), specifically `kaadhal` (intense love). Its central theme is the aspiration for an eternal, all-consuming union with the beloved, moving beyond transient existence ('காற்றில் கரையும் அன்பு') towards a profound and complete merging of identities ('மண்ணில் என்னோடு கரைய', 'நான் உன்னில் மறைய வேண்டும்').",
+    "yaappu": "This is a lyrical, short poem resembling free verse, consisting of five lines (அடி) of varying lengths but maintaining a consistent emotional rhythm. It strategically employs மோனை (alliteration) and எதுகை (assonance) to enhance its flow and musicality, rather than adhering to strict classical meters (சீர், தளை).",
+    "ani": "The poem primarily uses உருவகம் (metaphor) in 'காதல் தீயில்' (love is fire), and an implied உவமை (simile) in 'காற்றில் கரையும் அன்பு' (love dissolving like something ephemeral in the wind). The repeated concept of 'கரைய' (dissolving/merging) serves as a subtle சொற்பின்வருநிலையணி, emphasizing the desire for ultimate union. A nuanced contrast (முரண்) is present between transient love (wind) and enduring, merging love (earth)."
+  }
+}
+2025-09-20 17:25:15,573 [ERROR] Failed to generate embedding
+Traceback (most recent call last):
+  File "D:\SRM-tamil\srm-tamil-master\backend\genai.py", line 65, in generate_embedding
+    res = model.embed_content([text])
+          ^^^^^^^^^^^^^^^^^^^
+AttributeError: 'GenerativeModel' object has no attribute 'embed_content'. Did you mean: 'cached_content'?
+2025-09-20 17:25:15,576 [INFO] Poem analysis saved to knowledge base
+2025-09-20 17:25:15,577 [INFO] 127.0.0.1 - - [20/Sep/2025 17:25:15] "POST /analyze-poem HTTP/1.1" 200 -
+2025-09-20 17:25:24,229 [INFO] 127.0.0.1 - - [20/Sep/2025 17:25:24] "OPTIONS /chat HTTP/1.1" 200 -
+2025-09-20 17:25:24,235 [INFO] Received /chat request: {'message': 'hi', 'poem': 'காற்றில் கரையும் அன்பு\nகாற்று நின்ற பின்பு,\nமண்ணில் என்னோடு கரைய,\nகாதல் தீயில் எரிய,\nநான் உன்னில் மறைய வேண்டும்.', 'analysis': {'ilakkanam': {'ani': "The poem primarily uses உருவகம் (metaphor) in 'காதல் தீயில்' (love is fire), and an implied உவமை (simile) in 'காற்றில் கரையும் அன்பு' (love dissolving like something ephemeral in the wind). The repeated concept of 'கரைய' (dissolving/merging) serves as a subtle சொற்பின்வருநிலையணி, emphasizing the desire for ultimate union. A nuanced contrast (முரண்) is present between transient love (wind) and enduring, merging love (earth).", 'ezuthu': "The poem primarily utilizes simple, commonly used Tamil letters (Uyirmei letters). There's a subtle use of alliteration (மோனை) in phrases like 'காற்றில் கரையும்', 'காதல் கரைய' and assonance (எதுகை) in 'கரையும்', 'எரிய', 'மறைய', contributing to the poem's sonic appeal.", 'porul': "This poem falls under அகப்பொருள் (love theme), specifically `kaadhal` (intense love). Its central theme is the aspiration for an eternal, all-consuming union with the beloved, moving beyond transient existence ('காற்றில் கரையும் அன்பு') towards a profound and complete merging of identities ('மண்ணில் என்னோடு கரைய', 'நான் உன்னில் மறைய வேண்டும்').", 'sol': 'The vocabulary is direct and emotionally charged, combining nouns (அன்பு, காற்று, மண், காதல், தீ), verbs (கரையும், நின்ற, கரைய, எரிய, மறைய வேண்டும்), and particles (பின்பு, இல்). These choices create vivid imagery and convey deep emotional longing effectively.', 'yaappu': 'This is a lyrical, short poem resembling free verse, consisting of five lines (அடி) of varying lengths but maintaining a consistent emotional rhythm. It strategically employs மோனை (alliteration) and எதுகை (assonance) to enhance its flow and musicality, rather than adhering to strict classical meters (சீர், தளை).'}, 'simplifiedEnglish': 'Love that dissolves in the wind. After the wind ceases, I wish to dissolve with me in the earth, burn in the fire of love, and completely disappear into you.', 'simplifiedTamil': 'காற்றில் கரைந்து போகும் அன்பு, காற்று அடங்கிய பின்னும், மண்ணில் என்னுடன் கலந்து, காதல் எனும் தீயில் எரிந்து, நான் உன்னுடன் முழுமையாக ஒன்றி மறைய வேண்டும்.'}}
+2025-09-20 17:25:24,236 [ERROR] Failed to generate embedding
+Traceback (most recent call last):
+  File "D:\SRM-tamil\srm-tamil-master\backend\genai.py", line 65, in generate_embedding
+    res = model.embed_content([text])
+          ^^^^^^^^^^^^^^^^^^^
+AttributeError: 'GenerativeModel' object has no attribute 'embed_content'. Did you mean: 'cached_content'?
+2025-09-20 17:25:24,241 [DEBUG] Saved chat message: hi
+2025-09-20 17:25:24,263 [ERROR] Failed to generate embedding
+Traceback (most recent call last):
+  File "D:\SRM-tamil\srm-tamil-master\backend\genai.py", line 65, in generate_embedding
+    res = model.embed_content([text])
+          ^^^^^^^^^^^^^^^^^^^
+AttributeError: 'GenerativeModel' object has no attribute 'embed_content'. Did you mean: 'cached_content'?
+2025-09-20 17:25:24,265 [DEBUG] Retrieved context for message 'hi': {"simplifiedTamil": "காற்றில் கரைந்து போகும் அன்பு, காற்று அடங்கிய பின்னும், மண்ணில் என்னுடன் கலந்து, காதல் எனும் தீயில் எரிந்து, நான் உன்னுடன் முழுமையாக ஒன்றி மறைய வேண்டும்.", "simplifiedEnglish": "Love that dissolves in the wind. After the wind ceases, I wish to dissolve with me in the earth, burn in the fire of love, and completely disappear into you.", "ilakkanam": {"ezuthu": "The poem primarily utilizes simple, commonly used Tamil letters (Uyirmei letters). There's a subtle use of alliteration (மோனை) in phrases like 'காற்றில் கரையும்', 'காதல் கரைய' and assonance (எதுகை) in 'கரையும்', 'எரிய', 'மறைய', contributing to the poem's sonic appeal.", "sol": "The vocabulary is direct and emotionally charged, combining nouns (அன்பு, காற்று, மண், காதல், தீ), verbs (கரையும், நின்ற, கரைய, எரிய, மறைய வேண்டும்), and particles (பின்பு, இல்). These choices create vivid imagery and convey deep emotional longing effectively.", "porul": "This poem falls under அகப்பொருள் (love theme), specifically `kaadhal` (intense love). Its central theme is the aspiration for an eternal, all-consuming union with the beloved, moving beyond transient existence ('காற்றில் கரையும் அன்பு') towards a profound and complete merging of identities ('மண்ணில் என்னோடு கரைய', 'நான் உன்னில் மறைய வேண்டும்').", "yaappu": "This is a lyrical, short poem resembling free verse, consisting of five lines (அடி) of varying lengths but maintaining a consistent emotional rhythm. It strategically employs மோனை (alliteration) and எதுகை (assonance) to enhance its flow and musicality, rather than adhering to strict classical meters (சீர், தளை).", "ani": "The poem primarily uses உருவகம் (metaphor) in 'காதல் தீயில்' (love is fire), and an implied உவமை (simile) in 'காற்றில் கரையும் அன்பு' (love dissolving like something ephemeral in the wind). The repeated concept of 'கரைய' (dissolving/merging) serves as a subtle சொற்பின்வருநிலையணி, emphasizing the desire for ultimate union. A nuanced contrast (முரண்) is present between transient love (wind) and enduring, merging love (earth)."}}
+
+hi
+2025-09-20 17:25:25,482 [DEBUG] Gemini chat reply: வணக்கம்! நலமா? (Hello! How are you?)
+2025-09-20 17:25:25,483 [INFO] 127.0.0.1 - - [20/Sep/2025 17:25:25] "POST /chat HTTP/1.1" 200 -
+2025-09-20 17:25:45,625 [INFO] 127.0.0.1 - - [20/Sep/2025 17:25:45] "OPTIONS /chat HTTP/1.1" 200 -
+2025-09-20 17:25:45,631 [INFO] Received /chat request: {'message': 'explain ani ilakanam of above poem', 'poem': 'காற்றில் கரையும் அன்பு\nகாற்று நின்ற பின்பு,\nமண்ணில் என்னோடு கரைய,\nகாதல் தீயில் எரிய,\nநான் உன்னில் மறைய வேண்டும்.', 'analysis': {'ilakkanam': {'ani': "The poem primarily uses உருவகம் (metaphor) in 'காதல் தீயில்' (love is fire), and an implied உவமை (simile) in 'காற்றில் கரையும் அன்பு' (love dissolving like something ephemeral in the wind). The repeated concept of 'கரைய' (dissolving/merging) serves as a subtle சொற்பின்வருநிலையணி, emphasizing the desire for ultimate union. A nuanced contrast (முரண்) is present between transient love (wind) and enduring, merging love (earth).", 'ezuthu': "The poem primarily utilizes simple, commonly used Tamil letters (Uyirmei letters). There's a subtle use of alliteration (மோனை) in phrases like 'காற்றில் கரையும்', 'காதல் கரைய' and assonance (எதுகை) in 'கரையும்', 'எரிய', 'மறைய', contributing to the poem's sonic appeal.", 'porul': "This poem falls under அகப்பொருள் (love theme), specifically `kaadhal` (intense love). Its central theme is the aspiration for an eternal, all-consuming union with the beloved, moving beyond transient existence ('காற்றில் கரையும் அன்பு') towards a profound and complete merging of identities ('மண்ணில் என்னோடு கரைய', 'நான் உன்னில் மறைய வேண்டும்').", 'sol': 'The vocabulary is direct and emotionally charged, combining nouns (அன்பு, காற்று, மண், காதல், தீ), verbs (கரையும், நின்ற, கரைய, எரிய, மறைய வேண்டும்), and particles (பின்பு, இல்). These choices create vivid imagery and convey deep emotional longing effectively.', 'yaappu': 'This is a lyrical, short poem resembling free verse, consisting of five lines (அடி) of varying lengths but maintaining a consistent emotional rhythm. It strategically employs மோனை (alliteration) and எதுகை (assonance) to enhance its flow and musicality, rather than adhering to strict classical meters (சீர், தளை).'}, 'simplifiedEnglish': 'Love that dissolves in the wind. After the wind ceases, I wish to dissolve with me in the earth, burn in the fire of love, and completely disappear into you.', 'simplifiedTamil': 'காற்றில் கரைந்து போகும் அன்பு, காற்று அடங்கிய பின்னும், மண்ணில் என்னுடன் கலந்து, காதல் எனும் தீயில் எரிந்து, நான் உன்னுடன் முழுமையாக ஒன்றி மறைய வேண்டும்.'}}
+2025-09-20 17:25:45,632 [ERROR] Failed to generate embedding
+Traceback (most recent call last):
+  File "D:\SRM-tamil\srm-tamil-master\backend\genai.py", line 65, in generate_embedding
+    res = model.embed_content([text])
+          ^^^^^^^^^^^^^^^^^^^
+AttributeError: 'GenerativeModel' object has no attribute 'embed_content'. Did you mean: 'cached_content'?
+2025-09-20 17:25:45,634 [DEBUG] Saved chat message: explain ani ilakanam of above poem
+2025-09-20 17:25:45,656 [ERROR] Failed to generate embedding
+Traceback (most recent call last):
+  File "D:\SRM-tamil\srm-tamil-master\backend\genai.py", line 65, in generate_embedding
+    res = model.embed_content([text])
+          ^^^^^^^^^^^^^^^^^^^
+AttributeError: 'GenerativeModel' object has no attribute 'embed_content'. Did you mean: 'cached_content'?
+2025-09-20 17:25:45,657 [DEBUG] Retrieved context for message 'explain ani ilakanam of above poem': {"simplifiedTamil": "காற்றில் கரைந்து போகும் அன்பு, காற்று அடங்கிய பின்னும், மண்ணில் என்னுடன் கலந்து, காதல் எனும் தீயில் எரிந்து, நான் உன்னுடன் முழுமையாக ஒன்றி மறைய வேண்டும்.", "simplifiedEnglish": "Love that dissolves in the wind. After the wind ceases, I wish to dissolve with me in the earth, burn in the fire of love, and completely disappear into you.", "ilakkanam": {"ezuthu": "The poem primarily utilizes simple, commonly used Tamil letters (Uyirmei letters). There's a subtle use of alliteration (மோனை) in phrases like 'காற்றில் கரையும்', 'காதல் கரைய' and assonance (எதுகை) in 'கரையும்', 'எரிய', 'மறைய', contributing to the poem's sonic appeal.", "sol": "The vocabulary is direct and emotionally charged, combining nouns (அன்பு, காற்று, மண், காதல், தீ), verbs (கரையும், நின்ற, கரைய, எரிய, மறைய வேண்டும்), and particles (பின்பு, இல்). These choices create vivid imagery and convey deep emotional longing effectively.", "porul": "This poem falls under அகப்பொருள் (love theme), specifically `kaadhal` (intense love). Its central theme is the aspiration for an eternal, all-consuming union with the beloved, moving beyond transient existence ('காற்றில் கரையும் அன்பு') towards a profound and complete merging of identities ('மண்ணில் என்னோடு கரைய', 'நான் உன்னில் மறைய வேண்டும்').", "yaappu": "This is a lyrical, short poem resembling free verse, consisting of five lines (அடி) of varying lengths but maintaining a consistent emotional rhythm. It strategically employs மோனை (alliteration) and எதுகை (assonance) to enhance its flow and musicality, rather than adhering to strict classical meters (சீர், தளை).", "ani": "The poem primarily uses உருவகம் (metaphor) in 'காதல் தீயில்' (love is fire), and an implied உவமை (simile) in 'காற்றில் கரையும் அன்பு' (love dissolving like something ephemeral in the wind). The repeated concept of 'கரைய' (dissolving/merging) serves as a subtle சொற்பின்வருநிலையணி, emphasizing the desire for ultimate union. A nuanced contrast (முரண்) is present between transient love (wind) and enduring, merging love (earth)."}}
+
+hi
+
+explain ani ilakanam of above poem
+2025-09-20 17:25:57,907 [DEBUG] Gemini chat reply: Vanakkam! As a Tamil literary expert, I'm delighted to delve into the *ani ilakkanam* (figures of speech) employed in this exquisite poem. The poet masterfully uses several figures of speech to imbue the lines with profound meaning and emotional depth.
+
+Here's an explanation of the *ani* found in the poem:
+
+1.  **உருவகம் (Uruvagham - Metaphor):**
+    *   The most striking *ani* is **உருவகம்** in the phrase **"காதல் எனும் தீயில் எரிந்து"** (burning in the fire of love). Here, love is not merely *compared* to fire (which would be உவமை), but is directly presented *as* fire itself. This powerful metaphor brilliantly conveys the intense, consuming, and transformative nature of the protagonist's love, suggesting a burning passion that purifies and leads to ultimate union.
+
+2.  **உவமை (Uvamai - Simile - Implied):**
+    *   An **உவமை** is subtly implied in **"காற்றில் கரைந்து போகும் அன்பு"** (love that dissolves in the wind). While not explicitly stating 'love *like* wind,' the imagery evokes the fleeting and ephemeral nature of an ordinary, transient love, drawing a comparison to something insubstantial that vanishes without a trace. This sets up a profound contrast with the deeper, enduring union the poet desires.
+
+3.  **சொற்பின்வருநிலையணி (Sorpinvarunilaiyani - Repetition of a Word with the Same Meaning/Concept):**
+    *   The repeated concept of **'கரைய'** (to dissolve, to merge, to disappear) functions as a subtle **சொற்பின்வருநிலையணி**. Though not always an exact word-for-word repetition in every line, the core idea of dissolving and merging is reiterated throughout the poem ("காற்றில் கரைந்து போகும் அன்பு," "மண்ணில் என்னுடன் கலந்து," "நான் உன்னுடன் முழுமையாக ஒன்றி மறைய வேண்டும்"). This sustained emphasis powerfully underscores the profound desire for ultimate, complete, and inseparable union with the beloved, moving from transient dissolution to eternal merging.
+
+4.  **முரண் (Murran - Antithesis/Contrast):**
+    *   There is a nuanced **முரண்** (antithesis or contrast) woven into the poem. This is evident in the juxtaposition of **"காற்றில் கரைந்து போகும் அன்பு"** (love dissolving in the wind – transient and ephemeral) with the aspiration for love to **"மண்ணில் என்னுடன் கலந்து"** (merge with me in the earth – enduring and deeply rooted). This contrast highlights the shift from a superficial, fleeting affection to a profound, eternal, and all-consuming bond, emphasizing the depth of the speaker's longing.
+
+These exquisite *ani* collectively enrich the poem, adding layers of meaning, emotional depth, and poetic beauty, transforming a simple expression of love into a profound and memorable literary experience.
+2025-09-20 17:25:57,909 [INFO] 127.0.0.1 - - [20/Sep/2025 17:25:57] "POST /chat HTTP/1.1" 200 -
+2025-09-20 17:32:59,098 [INFO] 127.0.0.1 - - [20/Sep/2025 17:32:59] "OPTIONS /analyze-poem HTTP/1.1" 200 -
+2025-09-20 17:32:59,102 [INFO] Received /analyze-poem request: {'prompt': 'காற்றில் கரையும் அன்பு\nகாற்று நின்ற பின்பு,\nமண்ணில் என்னோடு கரைய,\nகாதல் தீயில் எரிய,\nநான் உன்னில் மறைய வேண்டும்.'}
+2025-09-20 17:32:59,103 [DEBUG] Sending prompt to Gemini: 
+You are a Tamil literary expert.
+Analyze the following poem and return ONLY valid JSON in this structure:
+
+{
+  "simplifiedTamil": "string",
+  "simplifiedEnglish": "string",
+  "ilakkanam": {
+    "ezuthu": "string",
+    "sol": "string",
+    "porul": "string",
+    "yaappu": "string",
+    "ani": "string"
+  }
+}
+
+Poem:
+"""காற்றில் கரையும் அன்பு
+காற்று நின்ற பின்பு,
+மண்ணில் என்னோடு கரைய,
+காதல் தீயில் எரிய,
+நான் உன்னில் மறைய வேண்டும்."""
+
+2025-09-20 17:33:20,587 [DEBUG] Gemini response content: {
+  "simplifiedTamil": "காற்றில் கரைந்து போகும் அன்பு போலில்லாமல், காற்று அடங்கிய பிறகும், என் காதல் என்னுடன் மண்ணில் கலந்து கரைய வேண்டும்; காதல் தீயில் கனன்று எரிய வேண்டும்; இறுதியில், நான் உன்னில் முற்றிலுமாக ஒன்றி மறைய வேண்டும் என்பதே என் விருப்பம்.",
+  "simplifiedEnglish": "Unlike love that dissolves in the wind, even after the wind ceases, I wish for my love to dissolve with me in the earth; for love to burn fiercely in fire; and ultimately, for me to completely merge and disappear within you.",
+  "ilakkanam": {
+    "ezuthu": "இக்கவிதையில் எளிய, பேச்சுவழக்கில் உள்ள தமிழ் எழுத்துக்கள் பயன்படுத்தப்பட்டுள்ளன. மென்மையான ஒலிப்பைக் கொண்ட சொற்கள் உணர்வுகளின் ஓட்டத்திற்கும், ஒன்றிணைதல் மற்றும் கரைதல் என்ற மையக்கருவிற்கும் ஏற்றவாறு அமைந்துள்ளன. வல்லினம், மெல்லினம், இடையினம் ஆகியவற்றின் சீரான பயன்பாடு ஒரு சமச்சீர் ஓசை நயத்தை வழங்குகிறது.",
+    "sol": "பொதுவான, எளிதில் புரியக்கூடிய தமிழ் சொற்கள் கையாளப்பட்டுள்ளன. 'அன்பு', 'காதல்', 'காற்று', 'மண்', 'தீ' போன்ற இயற்கை மற்றும் உணர்வுபூர்வமான சொற்கள் கருப்பொருளுக்கு வலு சேர்க்கின்றன. 'கரையும்', 'கரைய', 'எரிய', 'மறைய' போன்ற வினைச்சொற்கள் மாற்றத்தையும், கரைந்து ஒன்றாதலையும் உணர்த்துகின்றன. 'கரைய' என்ற சொல்லின் மீள் பயன்பாடு பொருள் அழுத்தத்தை கூட்டுகிறது.",
+    "porul": "இது அகப்பொருள் துறையைச் சார்ந்தது. தலைவன்/தலைவி தனது காதலின் ஆழத்தையும், காதலியுடன்/காதலனுடன் முழுமையாக ஒன்றி, தனது சுயத்தை அவனில்/அவளில் கரைத்துக்கொள்ளும் தீவிரமான விருப்பத்தையும் வெளிப்படுத்துகிறது. இது காதலின் அதீத பற்றையும், இறுதி நிலையான முழுமையான ஐக்கியத்தையும் (spiritual or emotional union) வலியுறுத்துகிறது.",
+    "yaappu": "இக்கவிதை மரபான யாப்பு இலக்கண விதிகளுக்கு உட்படாத ஒரு புதுக்கவிதை வகையைச் சேர்ந்தது. உணர்வுகளின் சுதந்திரமான வெளிப்பாட்டிற்கு முக்கியத்துவம் அளிக்கப்பட்டுள்ளது. வரிகளில் ஒரு குறிப்பிட்ட சந்தமும், ஓசை நயமும் இயல்பாகவே இழையோடியுள்ளது. மரபுக்கவிதைக்குரிய மோனை, எதுகை போன்ற அணிகள் அங்கொன்றும் இங்கொன்றுமாக அமைந்திருந்தாலும், அவை கட்டாய விதிகளாகப் பின்பற்றப்படவில்லை.",
+    "ani": "இக்கவிதையில் பின்வரும் அணிகள் பயன்படுத்தப்பட்டுள்ளன:\n1.  **உவமை / படிம அணி:** 'காற்றில் கரையும் அன்பு' - அன்பின் நிலையற்ற ஒரு தன்மையை காற்றுடன் கரைந்து போவதைப் போலக் காட்டுகிறது. இது பிற்காலத்திய நிலைத்த ஒன்றிணைவுக்கான விருப்பத்திற்கு ஒரு முரணாக அமைக்கப்பட்டுள்ளது.\n2.  **உருவக அணி:** 'காதல் தீயில் எரிய' - காதலைத் தீயாகவும், அது கனன்று எரிவதாகவும் உருவகப்படுத்துவதன் மூலம், காதலின் தீவிரத்தையும், ஆழமான பிணைப்பையும் வெளிப்படுத்துகிறது.\n3.  **வேற்றுமை அணி:** காற்றில் கரைவது (நிலையற்றது) மற்றும் மண்ணில் கரைந்து, தீயில் எரிந்து, உன்னில் மறைவது (நிலைத்த, முழுமையான ஒன்றிணைவு) ஆகியவற்றுக்கு இடையே உள்ள வேறுபாட்டை அழகாகக் காட்டுவதன் மூலம் கவிதையின் மையக்கருத்தை வலுப்படுத்துகிறது. இது உணர்வின் ஆழத்தை படிப்படியாக மேம்படுத்துகிறது."
+  }
+}
+2025-09-20 17:33:20,589 [ERROR] Failed to generate embedding
+Traceback (most recent call last):
+  File "D:\SRM-tamil\srm-tamil-master\backend\genai.py", line 65, in generate_embedding
+    res = model.embed_content([text])
+          ^^^^^^^^^^^^^^^^^^^
+AttributeError: 'GenerativeModel' object has no attribute 'embed_content'. Did you mean: 'cached_content'?
+2025-09-20 17:33:20,591 [INFO] Poem analysis saved to knowledge base
+2025-09-20 17:33:20,592 [INFO] 127.0.0.1 - - [20/Sep/2025 17:33:20] "POST /analyze-poem HTTP/1.1" 200 -
+2025-09-20 17:33:49,449 [INFO] 127.0.0.1 - - [20/Sep/2025 17:33:49] "OPTIONS /chat HTTP/1.1" 200 -
+2025-09-20 17:33:49,453 [INFO] Received /chat request: {'message': 'hi', 'poem': 'காற்றில் கரையும் அன்பு\nகாற்று நின்ற பின்பு,\nமண்ணில் என்னோடு கரைய,\nகாதல் தீயில் எரிய,\nநான் உன்னில் மறைய வேண்டும்.', 'analysis': {'ilakkanam': {'ani': "இக்கவிதையில் பின்வரும் அணிகள் பயன்படுத்தப்பட்டுள்ளன:\n1.  **உவமை / படிம அணி:** 'காற்றில் கரையும் அன்பு' - அன்பின் நிலையற்ற ஒரு தன்மையை காற்றுடன் கரைந்து போவதைப் போலக் காட்டுகிறது. இது பிற்காலத்திய நிலைத்த ஒன்றிணைவுக்கான விருப்பத்திற்கு ஒரு முரணாக அமைக்கப்பட்டுள்ளது.\n2.  **உருவக அணி:** 'காதல் தீயில் எரிய' - காதலைத் தீயாகவும், அது கனன்று எரிவதாகவும் உருவகப்படுத்துவதன் மூலம், காதலின் தீவிரத்தையும், ஆழமான பிணைப்பையும் வெளிப்படுத்துகிறது.\n3.  **வேற்றுமை அணி:** காற்றில் கரைவது (நிலையற்றது) மற்றும் மண்ணில் கரைந்து, தீயில் எரிந்து, உன்னில் மறைவது (நிலைத்த, முழுமையான ஒன்றிணைவு) ஆகியவற்றுக்கு இடையே உள்ள வேறுபாட்டை அழகாகக் காட்டுவதன் மூலம் கவிதையின் மையக்கருத்தை வலுப்படுத்துகிறது. இது உணர்வின் ஆழத்தை படிப்படியாக மேம்படுத்துகிறது.", 'ezuthu': 'இக்கவிதையில் எளிய, பேச்சுவழக்கில் உள்ள தமிழ் எழுத்துக்கள் பயன்படுத்தப்பட்டுள்ளன. மென்மையான ஒலிப்பைக் கொண்ட சொற்கள் உணர்வுகளின் ஓட்டத்திற்கும், ஒன்றிணைதல் மற்றும் கரைதல் என்ற மையக்கருவிற்கும் ஏற்றவாறு அமைந்துள்ளன. வல்லினம், மெல்லினம், இடையினம் ஆகியவற்றின் சீரான பயன்பாடு ஒரு சமச்சீர் ஓசை நயத்தை வழங்குகிறது.', 'porul': 'இது அகப்பொருள் துறையைச் சார்ந்தது. தலைவன்/தலைவி தனது காதலின் ஆழத்தையும், காதலியுடன்/காதலனுடன் முழுமையாக ஒன்றி, தனது சுயத்தை அவனில்/அவளில் கரைத்துக்கொள்ளும் தீவிரமான விருப்பத்தையும் வெளிப்படுத்துகிறது. இது காதலின் அதீத பற்றையும், இறுதி நிலையான முழுமையான ஐக்கியத்தையும் (spiritual or emotional union) வலியுறுத்துகிறது.', 'sol': "பொதுவான, எளிதில் புரியக்கூடிய தமிழ் சொற்கள் கையாளப்பட்டுள்ளன. 'அன்பு', 'காதல்', 'காற்று', 'மண்', 'தீ' போன்ற இயற்கை மற்றும் உணர்வுபூர்வமான சொற்கள் கருப்பொருளுக்கு வலு சேர்க்கின்றன. 'கரையும்', 'கரைய', 'எரிய', 'மறைய' போன்ற வினைச்சொற்கள் மாற்றத்தையும், கரைந்து ஒன்றாதலையும் உணர்த்துகின்றன. 'கரைய' என்ற சொல்லின் மீள் பயன்பாடு பொருள் அழுத்தத்தை கூட்டுகிறது.", 'yaappu': 'இக்கவிதை மரபான யாப்பு இலக்கண விதிகளுக்கு உட்படாத ஒரு புதுக்கவிதை வகையைச் சேர்ந்தது. உணர்வுகளின் சுதந்திரமான வெளிப்பாட்டிற்கு முக்கியத்துவம் அளிக்கப்பட்டுள்ளது. வரிகளில் ஒரு குறிப்பிட்ட சந்தமும், ஓசை நயமும் இயல்பாகவே இழையோடியுள்ளது. மரபுக்கவிதைக்குரிய மோனை, எதுகை போன்ற அணிகள் அங்கொன்றும் இங்கொன்றுமாக அமைந்திருந்தாலும், அவை கட்டாய விதிகளாகப் பின்பற்றப்படவில்லை.'}, 'simplifiedEnglish': 'Unlike love that dissolves in the wind, even after the wind ceases, I wish for my love to dissolve with me in the earth; for love to burn fiercely in fire; and ultimately, for me to completely merge and disappear within you.', 'simplifiedTamil': 'காற்றில் கரைந்து போகும் அன்பு போலில்லாமல், காற்று அடங்கிய பிறகும், என் காதல் என்னுடன் மண்ணில் கலந்து கரைய வேண்டும்; காதல் தீயில் கனன்று எரிய வேண்டும்; இறுதியில், நான் உன்னில் முற்றிலுமாக ஒன்றி மறைய வேண்டும் என்பதே என் விருப்பம்.'}}
+2025-09-20 17:33:49,454 [ERROR] Failed to generate embedding
+Traceback (most recent call last):
+  File "D:\SRM-tamil\srm-tamil-master\backend\genai.py", line 65, in generate_embedding
+    res = model.embed_content([text])
+          ^^^^^^^^^^^^^^^^^^^
+AttributeError: 'GenerativeModel' object has no attribute 'embed_content'. Did you mean: 'cached_content'?
+2025-09-20 17:33:49,457 [DEBUG] Saved chat message: hi
+2025-09-20 17:33:49,474 [ERROR] Failed to generate embedding
+Traceback (most recent call last):
+  File "D:\SRM-tamil\srm-tamil-master\backend\genai.py", line 65, in generate_embedding
+    res = model.embed_content([text])
+          ^^^^^^^^^^^^^^^^^^^
+AttributeError: 'GenerativeModel' object has no attribute 'embed_content'. Did you mean: 'cached_content'?
+2025-09-20 17:33:49,475 [DEBUG] Retrieved context for message 'hi': {"simplifiedTamil": "காற்றில் கரைந்து போகும் அன்பு, காற்று அடங்கிய பின்னும், மண்ணில் என்னுடன் கலந்து, காதல் எனும் தீயில் எரிந்து, நான் உன்னுடன் முழுமையாக ஒன்றி மறைய வேண்டும்.", "simplifiedEnglish": "Love that dissolves in the wind. After the wind ceases, I wish to dissolve with me in the earth, burn in the fire of love, and completely disappear into you.", "ilakkanam": {"ezuthu": "The poem primarily utilizes simple, commonly used Tamil letters (Uyirmei letters). There's a subtle use of alliteration (மோனை) in phrases like 'காற்றில் கரையும்', 'காதல் கரைய' and assonance (எதுகை) in 'கரையும்', 'எரிய', 'மறைய', contributing to the poem's sonic appeal.", "sol": "The vocabulary is direct and emotionally charged, combining nouns (அன்பு, காற்று, மண், காதல், தீ), verbs (கரையும், நின்ற, கரைய, எரிய, மறைய வேண்டும்), and particles (பின்பு, இல்). These choices create vivid imagery and convey deep emotional longing effectively.", "porul": "This poem falls under அகப்பொருள் (love theme), specifically `kaadhal` (intense love). Its central theme is the aspiration for an eternal, all-consuming union with the beloved, moving beyond transient existence ('காற்றில் கரையும் அன்பு') towards a profound and complete merging of identities ('மண்ணில் என்னோடு கரைய', 'நான் உன்னில் மறைய வேண்டும்').", "yaappu": "This is a lyrical, short poem resembling free verse, consisting of five lines (அடி) of varying lengths but maintaining a consistent emotional rhythm. It strategically employs மோனை (alliteration) and எதுகை (assonance) to enhance its flow and musicality, rather than adhering to strict classical meters (சீர், தளை).", "ani": "The poem primarily uses உருவகம் (metaphor) in 'காதல் தீயில்' (love is fire), and an implied உவமை (simile) in 'காற்றில் கரையும் அன்பு' (love dissolving like something ephemeral in the wind). The repeated concept of 'கரைய' (dissolving/merging) serves as a subtle சொற்பின்வருநிலையணி, emphasizing the desire for ultimate union. A nuanced contrast (முரண்) is present between transient love (wind) and enduring, merging love (earth)."}}
+
+hi
+
+explain ani ilakanam of above poem
+2025-09-20 17:34:05,023 [DEBUG] Gemini chat reply: கட்டளையிடப்பட்ட கவிதையின் அணிகலன் இலக்கணத்தை (Ani Ilakkanam) கீழே காணலாம்:
+
+இக்கவிதை பல்வேறு அணிகளைப் பயன்படுத்தி அதன் ஆழத்தையும் உணர்ச்சிப்பூர்வமான தாக்கத்தையும் மேம்படுத்துகிறது. அவை:
+
+1.  **உருவகம் (Uruvagham - Metaphor):**
+    *   "காதல் எனும் தீயில்" (in the fire of love) என்ற அடியில் உருவகம் வெளிப்படுகிறது. இங்கு, காதல் நேரடியாக 'தீ'யாக உருவகப்படுத்தப்பட்டுள்ளது. காதல் ஒரு நெருப்பைப் போல தீவிரமானது, சுட்டெரிக்கும் சக்தி கொண்டது, மேலும் அனைத்தையும் தனக்குள் உள்வாங்கி மாற்றும் தன்மை கொண்டது என்பதை இந்த உருவகம் powerfully conveys.
+
+2.  **உவமை (Uvamai - Simile - implied):**
+    *   "காற்றில் கரைந்து போகும் அன்பு" (love that dissolves in the wind) என்ற தொடரில் ஒரு மறைமுக உவமை பயன்படுத்தப்பட்டுள்ளது. இங்கு, அன்பு காற்றோடு கலந்து மறைந்து போகும் ஒரு மெல்லிய, நிலையற்ற ஒன்றோடு ஒப்பிடப்படுகிறது. இது ஒருவகையான அன்பின் நிலையற்ற தன்மையை உணர்த்துகிறது, இது பின்வரும் வரிகளில் கூறப்படும் ஆழமான, நிரந்தரமான அன்பிற்கான விருப்பத்திற்கு முரணாக அமைகிறது.
+
+3.  **சொற்பின்வருநிலையணி (Sorpinvarunilaianai - Repetition of a concept/word for emphasis):**
+    *   'கரைய' (karaiya - to dissolve, merge, disappear) என்ற கருத்தின் தொடர்ச்சியான பயன்பாடு ஒரு நுட்பமான சொற்பின்வருநிலையணியாக செயல்படுகிறது.
+        *   "காற்றில் கரைந்து போகும் அன்பு" (dissolving in the wind)
+        *   "மண்ணில் என்னுடன் கலந்து" (merging with me in the earth) - இங்கு 'கலந்து' என்ற சொல் 'கரைய' என்பதன் கருத்தையே குறிக்கிறது.
+        *   "நான் உன்னுடன் முழுமையாக ஒன்றி மறைய வேண்டும்" (I wish to completely disappear into you) - இங்கு 'மறைய' என்ற சொல்லும் 'கரைய' என்பதன் உச்சக்கட்ட நிலையையே காட்டுகிறது.
+    *   இந்தத் தொடர்ச்சியான பயன்பாடு, பேச்சாளரின் மிகைப்படுத்தப்பட்ட ஒன்றிணையும் ஆசையையும், காதலில் முழுமையாகக் கரைந்துபோகும் தீவிரமான விருப்பத்தையும் வலியுறுத்துகிறது. இது தற்காலிகமான கரைதலிலிருந்து நிரந்தரமான ஒன்றிணைவை நோக்கிய பயணத்தை சித்தரிக்கிறது.
+
+4.  **முரண் (Muran - Contrast/Antithesis):**
+    *   கவிதையில் ஒரு நுட்பமான முரண்பாடு வெளிப்படுகிறது. "காற்றில் கரைந்து போகும் அன்பு" (transient, ephemeral love) என்பதும், அதற்கு மாறாக "மண்ணில் என்னுடன் கலந்து, காதல் எனும் தீயில் எரிந்து, நான் உன்னுடன் முழுமையாக ஒன்றி மறைய வேண்டும்" (enduring, all-consuming, eternal union) என்பதும் முரண்பட்ட கருத்துக்களாகும். இது ஒரு நிலையற்ற, காற்றைப் போன்ற அன்பிலிருந்து, மண்ணைப் போல் உறுதியான, தீயைப் போல் தீவிரமான, முடிவில்லா ஐக்கியத்தை நோக்கிய விருப்பத்தை சிறப்பான முறையில் எடுத்துரைக்கிறது.
+
+இத்தகைய அணிகளின் பயன்பாடு, கவிதையின் உணர்ச்சிப் பெருக்கு மற்றும் கருப்பொருளின் ஆழத்தை மேம்படுத்துகிறது, கேட்பவர் அல்லது படிப்பவர் மனதில் நீடித்த தாக்கத்தை ஏற்படுத்துகிறது.
+2025-09-20 17:34:05,024 [INFO] 127.0.0.1 - - [20/Sep/2025 17:34:05] "POST /chat HTTP/1.1" 200 -
+2025-09-20 17:34:38,334 [INFO] 127.0.0.1 - - [20/Sep/2025 17:34:38] "OPTIONS /chat HTTP/1.1" 200 -
+2025-09-20 17:34:38,338 [INFO] Received /chat request: {'message': 'explain uvamai ani in this ', 'poem': 'காற்றில் கரையும் அன்பு\nகாற்று நின்ற பின்பு,\nமண்ணில் என்னோடு கரைய,\nகாதல் தீயில் எரிய,\nநான் உன்னில் மறைய வேண்டும்.', 'analysis': {'ilakkanam': {'ani': "இக்கவிதையில் பின்வரும் அணிகள் பயன்படுத்தப்பட்டுள்ளன:\n1.  **உவமை / படிம அணி:** 'காற்றில் கரையும் அன்பு' - அன்பின் நிலையற்ற ஒரு தன்மையை காற்றுடன் கரைந்து போவதைப் போலக் காட்டுகிறது. இது பிற்காலத்திய நிலைத்த ஒன்றிணைவுக்கான விருப்பத்திற்கு ஒரு முரணாக அமைக்கப்பட்டுள்ளது.\n2.  **உருவக அணி:** 'காதல் தீயில் எரிய' - காதலைத் தீயாகவும், அது கனன்று எரிவதாகவும் உருவகப்படுத்துவதன் மூலம், காதலின் தீவிரத்தையும், ஆழமான பிணைப்பையும் வெளிப்படுத்துகிறது.\n3.  **வேற்றுமை அணி:** காற்றில் கரைவது (நிலையற்றது) மற்றும் மண்ணில் கரைந்து, தீயில் எரிந்து, உன்னில் மறைவது (நிலைத்த, முழுமையான ஒன்றிணைவு) ஆகியவற்றுக்கு இடையே உள்ள வேறுபாட்டை அழகாகக் காட்டுவதன் மூலம் கவிதையின் மையக்கருத்தை வலுப்படுத்துகிறது. இது உணர்வின் ஆழத்தை படிப்படியாக மேம்படுத்துகிறது.", 'ezuthu': 'இக்கவிதையில் எளிய, பேச்சுவழக்கில் உள்ள தமிழ் எழுத்துக்கள் பயன்படுத்தப்பட்டுள்ளன. மென்மையான ஒலிப்பைக் கொண்ட சொற்கள் உணர்வுகளின் ஓட்டத்திற்கும், ஒன்றிணைதல் மற்றும் கரைதல் என்ற மையக்கருவிற்கும் ஏற்றவாறு அமைந்துள்ளன. வல்லினம், மெல்லினம், இடையினம் ஆகியவற்றின் சீரான பயன்பாடு ஒரு சமச்சீர் ஓசை நயத்தை வழங்குகிறது.', 'porul': 'இது அகப்பொருள் துறையைச் சார்ந்தது. தலைவன்/தலைவி தனது காதலின் ஆழத்தையும், காதலியுடன்/காதலனுடன் முழுமையாக ஒன்றி, தனது சுயத்தை அவனில்/அவளில் கரைத்துக்கொள்ளும் தீவிரமான விருப்பத்தையும் வெளிப்படுத்துகிறது. இது காதலின் அதீத பற்றையும், இறுதி நிலையான முழுமையான ஐக்கியத்தையும் (spiritual or emotional union) வலியுறுத்துகிறது.', 'sol': "பொதுவான, எளிதில் புரியக்கூடிய தமிழ் சொற்கள் கையாளப்பட்டுள்ளன. 'அன்பு', 'காதல்', 'காற்று', 'மண்', 'தீ' போன்ற இயற்கை மற்றும் உணர்வுபூர்வமான சொற்கள் கருப்பொருளுக்கு வலு சேர்க்கின்றன. 'கரையும்', 'கரைய', 'எரிய', 'மறைய' போன்ற வினைச்சொற்கள் மாற்றத்தையும், கரைந்து ஒன்றாதலையும் உணர்த்துகின்றன. 'கரைய' என்ற சொல்லின் மீள் பயன்பாடு பொருள் அழுத்தத்தை கூட்டுகிறது.", 'yaappu': 'இக்கவிதை மரபான யாப்பு இலக்கண விதிகளுக்கு உட்படாத ஒரு புதுக்கவிதை வகையைச் சேர்ந்தது. உணர்வுகளின் சுதந்திரமான வெளிப்பாட்டிற்கு முக்கியத்துவம் அளிக்கப்பட்டுள்ளது. வரிகளில் ஒரு குறிப்பிட்ட சந்தமும், ஓசை நயமும் இயல்பாகவே இழையோடியுள்ளது. மரபுக்கவிதைக்குரிய மோனை, எதுகை போன்ற அணிகள் அங்கொன்றும் இங்கொன்றுமாக அமைந்திருந்தாலும், அவை கட்டாய விதிகளாகப் பின்பற்றப்படவில்லை.'}, 'simplifiedEnglish': 'Unlike love that dissolves in the wind, even after the wind ceases, I wish for my love to dissolve with me in the earth; for love to burn fiercely in fire; and ultimately, for me to completely merge and disappear within you.', 'simplifiedTamil': 'காற்றில் கரைந்து போகும் அன்பு போலில்லாமல், காற்று அடங்கிய பிறகும், என் காதல் என்னுடன் மண்ணில் கலந்து கரைய வேண்டும்; காதல் தீயில் கனன்று எரிய வேண்டும்; இறுதியில், நான் உன்னில் முற்றிலுமாக ஒன்றி மறைய வேண்டும் என்பதே என் விருப்பம்.'}}
+2025-09-20 17:34:38,339 [ERROR] Failed to generate embedding
+Traceback (most recent call last):
+  File "D:\SRM-tamil\srm-tamil-master\backend\genai.py", line 65, in generate_embedding
+    res = model.embed_content([text])
+          ^^^^^^^^^^^^^^^^^^^
+AttributeError: 'GenerativeModel' object has no attribute 'embed_content'. Did you mean: 'cached_content'?
+2025-09-20 17:34:38,342 [DEBUG] Saved chat message: explain uvamai ani in this 
+2025-09-20 17:34:38,361 [ERROR] Failed to generate embedding
+Traceback (most recent call last):
+  File "D:\SRM-tamil\srm-tamil-master\backend\genai.py", line 65, in generate_embedding
+    res = model.embed_content([text])
+          ^^^^^^^^^^^^^^^^^^^
+AttributeError: 'GenerativeModel' object has no attribute 'embed_content'. Did you mean: 'cached_content'?
+2025-09-20 17:34:38,362 [DEBUG] Retrieved context for message 'explain uvamai ani in this ': {"simplifiedTamil": "காற்றில் கரைந்து போகும் அன்பு, காற்று அடங்கிய பின்னும், மண்ணில் என்னுடன் கலந்து, காதல் எனும் தீயில் எரிந்து, நான் உன்னுடன் முழுமையாக ஒன்றி மறைய வேண்டும்.", "simplifiedEnglish": "Love that dissolves in the wind. After the wind ceases, I wish to dissolve with me in the earth, burn in the fire of love, and completely disappear into you.", "ilakkanam": {"ezuthu": "The poem primarily utilizes simple, commonly used Tamil letters (Uyirmei letters). There's a subtle use of alliteration (மோனை) in phrases like 'காற்றில் கரையும்', 'காதல் கரைய' and assonance (எதுகை) in 'கரையும்', 'எரிய', 'மறைய', contributing to the poem's sonic appeal.", "sol": "The vocabulary is direct and emotionally charged, combining nouns (அன்பு, காற்று, மண், காதல், தீ), verbs (கரையும், நின்ற, கரைய, எரிய, மறைய வேண்டும்), and particles (பின்பு, இல்). These choices create vivid imagery and convey deep emotional longing effectively.", "porul": "This poem falls under அகப்பொருள் (love theme), specifically `kaadhal` (intense love). Its central theme is the aspiration for an eternal, all-consuming union with the beloved, moving beyond transient existence ('காற்றில் கரையும் அன்பு') towards a profound and complete merging of identities ('மண்ணில் என்னோடு கரைய', 'நான் உன்னில் மறைய வேண்டும்').", "yaappu": "This is a lyrical, short poem resembling free verse, consisting of five lines (அடி) of varying lengths but maintaining a consistent emotional rhythm. It strategically employs மோனை (alliteration) and எதுகை (assonance) to enhance its flow and musicality, rather than adhering to strict classical meters (சீர், தளை).", "ani": "The poem primarily uses உருவகம் (metaphor) in 'காதல் தீயில்' (love is fire), and an implied உவமை (simile) in 'காற்றில் கரையும் அன்பு' (love dissolving like something ephemeral in the wind). The repeated concept of 'கரைய' (dissolving/merging) serves as a subtle சொற்பின்வருநிலையணி, emphasizing the desire for ultimate union. A nuanced contrast (முரண்) is present between transient love (wind) and enduring, merging love (earth)."}}
+
+hi
+
+explain ani ilakanam of above poem
+2025-09-20 17:34:51,796 [DEBUG] Gemini chat reply: நிச்சயமாக! கொடுக்கப்பட்டுள்ள கவிதையில் உவமை அணி எவ்வாறு பயன்படுத்தப்பட்டுள்ளது என்பதை விளக்குகிறேன்.
+
+**உவமை அணி (Simile):**
+
+உவமை அணி என்பது, ஒன்றன் தன்மையை மற்றொன்றோடு ஒப்பிட்டு, பொதுவான தன்மையைக் கொண்டு விளக்குவதாகும். இதில் ஒப்பிடப்படும் பொருள் (உவமேயம்), ஒப்பிடுவதற்குப் பயன்படும் பொருள் (உவமானம்), பொதுவான பண்பு, மற்றும் உவம உருபுகள் (போல, அன்ன, ஒப்ப, நிகர போன்றவை) என நான்கு பகுதிகள் இருக்கும்.
+
+இக்கவிதையில், உவமை அணி நேரடியாகப் பயன்படுத்தப்படாமல், **குறிப்பு உவமையாக (Implied Simile)** வெளிப்படுகிறது.
+
+*   **பயன்பாடு:** "காற்றில் கரையும் அன்பு" (Love that dissolves in the wind) என்ற தொடரில் இது அமைந்துள்ளது.
+
+*   **விளக்கம்:**
+    *   **உவமேயம் (Object being compared):** இங்கு கவிஞர் குறிப்பிடும் "அன்பு" (love).
+    *   **உவமானம் (Object of comparison):** காற்றில் கரைந்து மறையும் ஏதேனும் ஒரு நிலையற்ற, லேசான பொருள் (உதாரணமாக, புகை, பனி, தூசி போன்றவை). இது கவிதையில் வெளிப்படையாகக் குறிப்பிடப்படவில்லை, ஆனால் காற்றில் கரைந்து போகும் 'செயல்' அதை உணர்த்துகிறது.
+    *   **பொதுத்தன்மை (Common characteristic):** நிலையாமை, எளிதில் மறைந்து போகும் தன்மை, பிடிமானமற்ற தன்மை.
+    *   **உவம உருபு (Word of comparison):** இக்கவிதையில், 'போல', 'அன்ன' போன்ற நேரடியான உவம உருபுகள் இல்லை. அன்பானது 'காற்றில் கரையும்' என்ற செயல் மூலமே அந்த ஒப்பிடுதல் நிகழ்கிறது.
+
+**கவிதையில் இதன் பொருள்:**
+கவிஞர் தனது அன்பை, ஆரம்பத்தில் காற்றில் கரைந்து போகும் ஒரு நிலையற்ற பொருளாகக் கருதுகிறார். இது காதலின் ஒரு தற்காலிகமான அல்லது எளிதில் மறைந்து போகக்கூடிய தன்மையைக் குறிக்கிறது. ஆனால், கவிதையின் அடுத்த வரிகளில், அந்த அன்பு காற்று அடங்கிய பின்னும் மண்ணில் நிலைத்து, காதலாகிய தீயில் எரிந்து காதலனுடன் முழுமையாக ஒன்றி மறைய வேண்டும் என்று விரும்புவதன் மூலம், நிலையற்ற தன்மையைத் தாண்டி ஒரு நிரந்தரமான சங்கமத்தை நோக்கிய ஆழமான ஏக்கத்தை இந்த குறிப்பு உவமை அமைக்கிறது.
+
+ஆகவே, "காற்றில் கரையும் அன்பு" என்பது காதலின் ஆரம்பகால அல்லது நிலையற்ற தன்மையை, காற்றில் கரையும் ஒரு பொருளின் நிலையாமையுடன் ஒப்பிடும் ஒரு நுட்பமான குறிப்பு உவமையாகக் கவிதையில் விரிகிறது.
+2025-09-20 17:34:51,798 [INFO] 127.0.0.1 - - [20/Sep/2025 17:34:51] "POST /chat HTTP/1.1" 200 -
+2025-09-20 17:36:59,845 [INFO] 127.0.0.1 - - [20/Sep/2025 17:36:59] "OPTIONS /analyze-poem HTTP/1.1" 200 -
+2025-09-20 17:36:59,851 [INFO] Received /analyze-poem request: {'prompt': 'காற்றில் கரையும் அன்பு\nகாற்று நின்ற பின்பு,\nமண்ணில் என்னோடு கரைய,\nகாதல் தீயில் எரிய,\nநான் உன்னில் மறைய வேண்டும்.'}
+2025-09-20 17:36:59,851 [DEBUG] Sending prompt to Gemini: 
+You are a Tamil literary expert.
+Analyze the following poem and return ONLY valid JSON in this structure:
+
+{
+  "simplifiedTamil": "string",
+  "simplifiedEnglish": "string",
+  "ilakkanam": {
+    "ezuthu": "string",
+    "sol": "string",
+    "porul": "string",
+    "yaappu": "string",
+    "ani": "string"
+  }
+}
+
+Poem:
+"""காற்றில் கரையும் அன்பு
+காற்று நின்ற பின்பு,
+மண்ணில் என்னோடு கரைய,
+காதல் தீயில் எரிய,
+நான் உன்னில் மறைய வேண்டும்."""
+
+2025-09-20 17:37:17,658 [DEBUG] Gemini response content: {
+  "simplifiedTamil": "என் அன்பு காற்றில் கரைந்தது. காற்று நின்றபின், என் உடல் மண்ணோடு கரையும். காதல் என்னும் தீயில் எரிந்து, நான் உன்னோடு ஒன்றி மறைய விரும்புகிறேன்.",
+  "simplifiedEnglish": "My love dissolves in the wind. After the wind stops, my body will dissolve with the earth. Burning in the fire of love, I wish to merge and disappear into you.",
+  "ilakkanam": {
+    "ezuthu": "குறில், நெடில், வல்லினம், மெல்லினம், இடையினம் ஆகிய எழுத்துக்களின் இயல்பான கலப்பு காணப்படுகிறது. எளிய உச்சரிப்பிற்கு ஏற்ற சொற்கள் பயன்படுத்தப்பட்டுள்ளன. 'ர்', 'ன்' போன்ற மெல்லின, இடையின ஒலிகள் கவிதையின் ஓசை நயத்திற்கு உதவுகின்றன.",
+    "sol": "அன்பு, காற்று, காதல், மண் போன்ற பெயர்ச்சொற்களும், கரையும், நின்ற, கரைய, எரிய, மறைய போன்ற வினைச்சொற்களும், பின்பு, என்னோடு, உன்னில் போன்ற இடைச்சொற்களும் இயல்பாகப் பயன்படுத்தப்பட்டுள்ளன. சொற்கள் எளிமையானவை, நேரடிப் பொருளைத் தரக்கூடியவை.",
+    "porul": "இக்கவிதை ஆழமான காதலையும், மரணத்திற்குப் பிறகான அல்லது transcend செய்யும் காதலின் நிலையையும், ஆத்ம ஐக்கியத்தையும் பேசுகிறது. காற்று, மண், தீ போன்ற இயற்கைக் கூறுகளைப் பயன்படுத்தி காதல் அழிவில்லாதது, ஆன்ம நிலையில் ஒன்றிவிட வேண்டும் என்ற பேராவலை வெளிப்படுத்துகிறது.",
+    "yaappu": "இக்கவிதை மரபான யாப்பு இலக்கண விதிகளுக்கு உட்படாத புதுக்கவிதையாகும். நேரடியான தாள அமைப்போ, வெண்பா போன்ற குறிப்பிட்ட சீர் அமைப்போ இல்லை. எனினும், 'அன்பு' - 'பின்பு' போன்ற ஓரளவுக்கான இறுதி ஒலிகளும், 'கரைய', 'எரிய', 'மறைய' போன்ற ஒத்த ஈற்றசைச் சொற்களும் ஒருவித ஓசை நயத்தை உருவாக்குகின்றன.",
+    "ani": "'காதல் தீ' என்பது உருவக அணியாகும், இங்கு காதல் தீயாக உருவகப்படுத்தப்பட்டு அதன் தீவிரத்தையும் அழிக்கும்/தூய்மைப்படுத்தும் ஆற்றலையும் குறிக்கிறது. 'காற்றில் கரையும் அன்பு', 'மண்ணில் கரைய' போன்ற படிமங்கள் (imagery) காதலின் நிலைகளை உணர்த்துகின்றன."
+  }
+}
+2025-09-20 17:37:17,659 [ERROR] Failed to generate embedding
+Traceback (most recent call last):
+  File "D:\SRM-tamil\srm-tamil-master\backend\genai.py", line 65, in generate_embedding
+    res = model.embed_content([text])
+          ^^^^^^^^^^^^^^^^^^^
+AttributeError: 'GenerativeModel' object has no attribute 'embed_content'. Did you mean: 'cached_content'?
+2025-09-20 17:37:17,662 [INFO] Poem analysis saved to knowledge base
+2025-09-20 17:37:17,663 [INFO] 127.0.0.1 - - [20/Sep/2025 17:37:17] "POST /analyze-poem HTTP/1.1" 200 -
+2025-09-20 17:40:22,431 [INFO] 127.0.0.1 - - [20/Sep/2025 17:40:22] "OPTIONS /analyze-poem HTTP/1.1" 200 -
+2025-09-20 17:40:22,436 [INFO] Received /analyze-poem request: {'prompt': 'காற்றில் கரையும் அன்பு\nகாற்று நின்ற பின்பு,\nமண்ணில் என்னோடு கரைய,\nகாதல் தீயில் எரிய,\nநான் உன்னில் மறைய வேண்டும்.\n\nகாதல் வரக் கவிஞன் நான்,\nஉன்னை கண்ட என் கைகள்\nகவிதையின் நரம்பில் காதலை செலுத்தியும்,\nஎன் காதலை உன் மனதில் செலுத்த\nகாலம் மறுபடும் என்னோ?\n\nநூறு வேஷம் போடும் முகத்தில்\nதோன்றும் அணியைத் தேவையில்லை;\nஅகத்தின் அழகை\nஇந்த அகத்தியனுக்கு பரிசளி,\nஆக அழகியே!\n\nஉன்னோடு சேர்ந்து இசைக்க இச்சையும் இசைகுமாடி ஸ்வரங்கல் அறியா இசையருவியே'}
+2025-09-20 17:40:22,437 [DEBUG] Sending prompt to Gemini: 
+You are a Tamil literary expert.
+Analyze the following poem and return ONLY valid JSON in this structure:
+
+{
+  "simplifiedTamil": "string",
+  "simplifiedEnglish": "string",
+  "ilakkanam": {
+    "ezuthu": "string",
+    "sol": "string",
+    "porul": "string",
+    "yaappu": "string",
+    "ani": "string"
+  }
+}
+
+Poem:
+"""காற்றில் கரையும் அன்பு
+காற்று நின்ற பின்பு,
+மண்ணில் என்னோடு கரைய,
+காதல் தீயில் எரிய,
+நான் உன்னில் மறைய வேண்டும்.
+
+காதல் வரக் கவிஞன் நான்,
+உன்னை கண்ட என் கைகள்
+கவிதையின் நரம்பில் காதலை செலுத்தியும்,
+என் காதலை உன் மனதில் செலுத்த
+காலம் மறுபடும் என்னோ?
+
+நூறு வேஷம் போடும் முகத்தில்
+தோன்றும் அணியைத் தேவையில்லை;
+அகத்தின் அழகை
+இந்த அகத்தியனுக்கு பரிசளி,
+ஆக அழகியே!
+
+உன்னோடு சேர்ந்து இசைக்க இச்சையும் இசைகுமாடி ஸ்வரங்கல் அறியா இசையருவியே"""
+
+2025-09-20 17:40:49,613 [DEBUG] Gemini response content: {
+  "simplifiedTamil": "அன்பு காற்றில் கரைவது போல் இல்லாமல், காற்று நின்றபின் மண்ணில் என்னோடு நிலைத்து, தீயாய் கொழுந்துவிட்டு எரிந்து, நான் உன்னில் கலந்துவிட வேண்டும்.நான் காதல் பற்றி கவிதைகள் எழுதும் கவிஞன். உன்னைக் கண்ட எனது கைகள் கவிதையின் நரம்புகளில் காதலைப் புகுத்தின. ஆனால், என் காதலை உன் மனதில் சேர்க்க காலம் எனக்குத் தடையாக அமையுமா?நூற்றுக்கணக்கான வேடங்கள் பூசும் முகத்தின் வெளிப்பூச்சு அழகு எனக்குத் தேவையில்லை. உன் உள்ளத்தின் உண்மையான அழகை இந்த அகத்தியனுக்கு பரிசளி, பேரழகியே!ராகங்கள் அறியாத ஒரு இசையருவி போன்றவளே, உன்னோடு சேர்ந்து இசைக்க வேண்டும் என்ற என் ஆசை நிறைவேறுமா?",
+  "simplifiedEnglish": "I don't want love to dissolve in the wind. Rather, after the wind stops, I wish for it to endure with me in the earth, burn intensely like fire, and for me to merge completely into you.I am a poet who writes about love. My hands, after seeing you, infused love into the very veins of poetry. But will time prevent me from conveying my love directly into your heart?I have no need for the superficial beauty or adornments of a face that wears a hundred masks. Oh, most beautiful one, gift the true beauty of your inner self to this Agathiyan (myself)!Oh, fountain of music that knows no formal notes, will my desire to create music with you be fulfilled?",
+  "ilakkanam": {
+    "ezuthu": "இக்கவிதை வழக்கமான தமிழ் உயிர், மெய், மற்றும் உயிர்மெய் எழுத்துகளைக் கொண்டுள்ளது. எந்தவொரு சிறப்பு அல்லது அரிய எழுத்து வடிவங்களும் பயன்படுத்தப்படவில்லை. குறில், நெடில், வல்லினம், மெல்லினம், இடையினம் ஆகிய எழுத்துகள் ஒலியியல் மற்றும் பொருட்சுவையைப் பெருக்கப் பயன்படுத்தப்பட்டுள்ளன. 'காற்றில் கரையும்', 'காதல் வரக் கவிஞன்', 'அகத்தின் அழகை இந்த அகத்தியனுக்கு' போன்ற வரிகளில் எதுகை மற்றும் மோனை நயங்கள் காணப்படுகின்றன.",
+    "sol": "கவிதை பெரும்பாலும் எளிமையான, நேரடியான தமிழ் சொற்களைப் பயன்படுத்துகிறது. 'அன்பு, காற்று, மண், காதல், தீ, கவிஞன், கைகள், கவிதை, மனம், காலம், முகம், அகம், அழகி, இச்சை, இசையருவி' போன்ற பெயர்ச்சொற்களும், 'கரையும், நின்ற, எரிய, மறைய, கண்ட, செலுத்தியும், செலுத்த, மறுபடும், போடும், தோன்றும், தேவையில்லை, பரிசளி, இசைக்க, இசைகுமாடி' போன்ற வினைச்சொற்களும் பயன்படுத்தப்பட்டுள்ளன. 'இசையருவி' போன்ற கூட்டுச்சொற்கள் உள்ளன. 'அகத்தியன்' என்ற சொல், கவிஞன் தன்னை ஒரு தமிழ் அறிஞருடன் ஒப்பிட்டுக்கொண்ட ஒரு சிறப்புப் பெயராகப் பயன்படுத்தப்பட்டுள்ளது. சொற்களின் தேர்வு கவிதையின் உணர்வுபூர்வமான மற்றும் மென்மையான தொனியைப் பிரதிபலிக்கிறது.",
+    "porul": "இக்கவிதை அகப்பொருள் வகையைச் சேர்ந்தது, காதலன் தன் காதலியிடம் தன் ஆழ்ந்த உணர்வுகளையும் விருப்பங்களையும் வெளிப்படுத்துகிறது. காதலை நிலையானதாகவும், ஆழமானதாகவும், உடல் அழகுக்கு மேலாக உள்ளத்தின் அழகை விரும்புவதாகவும் வெளிப்படுத்துகிறது. 'காற்றில் கரையும் அன்பு' என்பது நிலையற்ற காதலையும், 'மண்ணில் என்னோடு கரைய' என்பது மரணம் வரை நீடிக்கும் காதலையும் குறிக்கிறது. கவிஞன் தன்னை 'காதல் வரக் கவிஞன்' மற்றும் 'அகத்தியன்' என்று கூறி தன் இலக்கிய அடையாளத்தையும், உள்ளொளிப் பார்வையையும் வெளிப்படுத்துகிறான். காதலியின் இயல்பான, செயற்கையற்ற அழகை 'ஸ்வரங்கல் அறியா இசையருவி' எனக் குறிப்பிடுகிறார். காதலை வெளிப்படுத்துவதில் உள்ள ஏக்கம் மற்றும் தயக்கம் 'காலம் மறுபடும் என்னோ?' மற்றும் 'இசைகுமாடி?' போன்ற கேள்விகளில் தொனிக்கிறது.",
+    "yaappu": "இக்கவிதை புதுக்கவிதை வடிவத்தில் அமைந்துள்ளது. இது மரபான யாப்பு இலக்கண விதிகளான வெண்பா, ஆசிரியப்பா போன்றவற்றை அப்பட்டமாகப் பின்பற்றவில்லை. இதில் கட்டுப்படுத்தப்பட்ட சீர், தளை, அடி மற்றும் ஓசை நயங்கள் இல்லை. ஆயினும், சொற்களின் தேர்வும், வரிகளின் சீரமைப்பும் இயல்பான ஒரு தாளத்தையும் ஓட்டத்தையும் உருவாக்குகின்றன. சிறிய வரிகள் உணர்வுகளின் நேரடி வெளிப்பாட்டிற்கு உதவுகின்றன. ஒவ்வொரு பத்தியும் ஒரு தனித்துவமான எண்ணத்தை வெளிப்படுத்துகிறது, இது கவிதைக்கு ஒரு கட்டமைப்பைக் கொடுக்கிறது. 'கரைய, எரிய, மறைய' போன்ற இடங்களில் இயல்பான எதுகை பயன்படுத்தப்பட்டுள்ளது.",
+    "ani": "இக்கவிதையில் பல அணிகள் பயன்படுத்தப்பட்டுள்ளன:\n*   **உருவக அணி (Metaphor):** 'காதல் தீயில் எரிய' (காதலைத் தீயாக உருவகித்தல்), 'கவிதையின் நரம்பில் காதலை செலுத்தியும்' (கவிதைக்கு நரம்புகள் கற்பித்துக் காதலைச் செலுத்துதல்), 'இசையருவியே' (காதலியை இசையருவியாக உருவகித்தல்).\n*   **உவமை அணி (Simile):** 'காற்றில் கரையும் அன்பு' (நிலையாற்ற தன்மையை காற்றுடன் ஒப்பிடுதல்).\n*   **தன்மை நவிற்சி அணி (Description):** 'நூறு வேஷம் போடும் முகத்தில் தோன்றும் அணியைத் தேவையில்லை' என்பதில் புற அழகை எளிய முறையில் விவரித்தல்.\n*   **உயர்வு நவிற்சி அணி (Hyperbole):** 'நூறு வேஷம் போடும் முகம்' என்பது முகத்தின் மாயத் தன்மையை அதிகப்படுத்திக் காட்டுகிறது.\n*   **பிறிது மொழிதல் அணி (Implied meaning):** 'அகத்தின் அழகை இந்த அகத்தியனுக்கு பரிசளி' என்பதில், வெளிப்படையான அழகுக்கு முக்கியத்துவம் கொடுக்காமல், அக அழகின் சிறப்பை வலியுறுத்துகிறது.\n*   **பொருள்கோள் அணி (Personification):** 'காலம் மறுபடும் என்னோ?' என்பதில் காலத்திற்கு மறுக்கும் தன்மையைக் கற்பித்தல்."
+  }
+}
+2025-09-20 17:40:49,615 [ERROR] Failed to generate embedding
+Traceback (most recent call last):
+  File "D:\SRM-tamil\srm-tamil-master\backend\genai.py", line 65, in generate_embedding
+    res = model.embed_content([text])
+          ^^^^^^^^^^^^^^^^^^^
+AttributeError: 'GenerativeModel' object has no attribute 'embed_content'. Did you mean: 'cached_content'?
+2025-09-20 17:40:49,618 [INFO] Poem analysis saved to knowledge base
+2025-09-20 17:40:49,619 [INFO] 127.0.0.1 - - [20/Sep/2025 17:40:49] "POST /analyze-poem HTTP/1.1" 200 -
+2025-09-20 17:41:37,168 [INFO] 127.0.0.1 - - [20/Sep/2025 17:41:37] "OPTIONS /chat HTTP/1.1" 200 -
+2025-09-20 17:41:37,173 [INFO] Received /chat request: {'message': 'who is hero refering in this poem ', 'poem': 'காற்றில் கரையும் அன்பு\nகாற்று நின்ற பின்பு,\nமண்ணில் என்னோடு கரைய,\nகாதல் தீயில் எரிய,\nநான் உன்னில் மறைய வேண்டும்.\n\nகாதல் வரக் கவிஞன் நான்,\nஉன்னை கண்ட என் கைகள்\nகவிதையின் நரம்பில் காதலை செலுத்தியும்,\nஎன் காதலை உன் மனதில் செலுத்த\nகாலம் மறுபடும் என்னோ?\n\nநூறு வேஷம் போடும் முகத்தில்\nதோன்றும் அணியைத் தேவையில்லை;\nஅகத்தின் அழகை\nஇந்த அகத்தியனுக்கு பரிசளி,\nஆக அழகியே!\n\nஉன்னோடு சேர்ந்து இசைக்க இச்சையும் இசைகுமாடி ஸ்வரங்கல் அறியா இசையருவியே', 'analysis': {'ilakkanam': {'ani': "இக்கவிதையில் பல அணிகள் பயன்படுத்தப்பட்டுள்ளன:\n*   **உருவக அணி (Metaphor):** 'காதல் தீயில் எரிய' (காதலைத் தீயாக உருவகித்தல்), 'கவிதையின் நரம்பில் காதலை செலுத்தியும்' (கவிதைக்கு நரம்புகள் கற்பித்துக் காதலைச் செலுத்துதல்), 'இசையருவியே' (காதலியை இசையருவியாக உருவகித்தல்).\n*   **உவமை அணி (Simile):** 'காற்றில் கரையும் அன்பு' (நிலையாற்ற தன்மையை காற்றுடன் ஒப்பிடுதல்).\n*   **தன்மை நவிற்சி அணி (Description):** 'நூறு வேஷம் போடும் முகத்தில் தோன்றும் அணியைத் தேவையில்லை' என்பதில் புற அழகை எளிய முறையில் விவரித்தல்.\n*   **உயர்வு நவிற்சி அணி (Hyperbole):** 'நூறு வேஷம் போடும் முகம்' என்பது முகத்தின் மாயத் தன்மையை அதிகப்படுத்திக் காட்டுகிறது.\n*   **பிறிது மொழிதல் அணி (Implied meaning):** 'அகத்தின் அழகை இந்த அகத்தியனுக்கு பரிசளி' என்பதில், வெளிப்படையான அழகுக்கு முக்கியத்துவம் கொடுக்காமல், அக அழகின் சிறப்பை வலியுறுத்துகிறது.\n*   **பொருள்கோள் அணி (Personification):** 'காலம் மறுபடும் என்னோ?' என்பதில் காலத்திற்கு மறுக்கும் தன்மையைக் கற்பித்தல்.", 'ezuthu': "இக்கவிதை வழக்கமான தமிழ் உயிர், மெய், மற்றும் உயிர்மெய் எழுத்துகளைக் கொண்டுள்ளது. எந்தவொரு சிறப்பு அல்லது அரிய எழுத்து வடிவங்களும் பயன்படுத்தப்படவில்லை. குறில், நெடில், வல்லினம், மெல்லினம், இடையினம் ஆகிய எழுத்துகள் ஒலியியல் மற்றும் பொருட்சுவையைப் பெருக்கப் பயன்படுத்தப்பட்டுள்ளன. 'காற்றில் கரையும்', 'காதல் வரக் கவிஞன்', 'அகத்தின் அழகை இந்த அகத்தியனுக்கு' போன்ற வரிகளில் எதுகை மற்றும் மோனை நயங்கள் காணப்படுகின்றன.", 'porul': "இக்கவிதை அகப்பொருள் வகையைச் சேர்ந்தது, காதலன் தன் காதலியிடம் தன் ஆழ்ந்த உணர்வுகளையும் விருப்பங்களையும் வெளிப்படுத்துகிறது. காதலை நிலையானதாகவும், ஆழமானதாகவும், உடல் அழகுக்கு மேலாக உள்ளத்தின் அழகை விரும்புவதாகவும் வெளிப்படுத்துகிறது. 'காற்றில் கரையும் அன்பு' என்பது நிலையற்ற காதலையும், 'மண்ணில் என்னோடு கரைய' என்பது மரணம் வரை நீடிக்கும் காதலையும் குறிக்கிறது. கவிஞன் தன்னை 'காதல் வரக் கவிஞன்' மற்றும் 'அகத்தியன்' என்று கூறி தன் இலக்கிய அடையாளத்தையும், உள்ளொளிப் பார்வையையும் வெளிப்படுத்துகிறான். காதலியின் இயல்பான, செயற்கையற்ற அழகை 'ஸ்வரங்கல் அறியா இசையருவி' எனக் குறிப்பிடுகிறார். காதலை வெளிப்படுத்துவதில் உள்ள ஏக்கம் மற்றும் தயக்கம் 'காலம் மறுபடும் என்னோ?' மற்றும் 'இசைகுமாடி?' போன்ற கேள்விகளில் தொனிக்கிறது.", 'sol': "கவிதை பெரும்பாலும் எளிமையான, நேரடியான தமிழ் சொற்களைப் பயன்படுத்துகிறது. 'அன்பு, காற்று, மண், காதல், தீ, கவிஞன், கைகள், கவிதை, மனம், காலம், முகம், அகம், அழகி, இச்சை, இசையருவி' போன்ற பெயர்ச்சொற்களும், 'கரையும், நின்ற, எரிய, மறைய, கண்ட, செலுத்தியும், செலுத்த, மறுபடும், போடும், தோன்றும், தேவையில்லை, பரிசளி, இசைக்க, இசைகுமாடி' போன்ற வினைச்சொற்களும் பயன்படுத்தப்பட்டுள்ளன. 'இசையருவி' போன்ற கூட்டுச்சொற்கள் உள்ளன. 'அகத்தியன்' என்ற சொல், கவிஞன் தன்னை ஒரு தமிழ் அறிஞருடன் ஒப்பிட்டுக்கொண்ட ஒரு சிறப்புப் பெயராகப் பயன்படுத்தப்பட்டுள்ளது. சொற்களின் தேர்வு கவிதையின் உணர்வுபூர்வமான மற்றும் மென்மையான தொனியைப் பிரதிபலிக்கிறது.", 'yaappu': "இக்கவிதை புதுக்கவிதை வடிவத்தில் அமைந்துள்ளது. இது மரபான யாப்பு இலக்கண விதிகளான வெண்பா, ஆசிரியப்பா போன்றவற்றை அப்பட்டமாகப் பின்பற்றவில்லை. இதில் கட்டுப்படுத்தப்பட்ட சீர், தளை, அடி மற்றும் ஓசை நயங்கள் இல்லை. ஆயினும், சொற்களின் தேர்வும், வரிகளின் சீரமைப்பும் இயல்பான ஒரு தாளத்தையும் ஓட்டத்தையும் உருவாக்குகின்றன. சிறிய வரிகள் உணர்வுகளின் நேரடி வெளிப்பாட்டிற்கு உதவுகின்றன. ஒவ்வொரு பத்தியும் ஒரு தனித்துவமான எண்ணத்தை வெளிப்படுத்துகிறது, இது கவிதைக்கு ஒரு கட்டமைப்பைக் கொடுக்கிறது. 'கரைய, எரிய, மறைய' போன்ற இடங்களில் இயல்பான எதுகை பயன்படுத்தப்பட்டுள்ளது."}, 'simplifiedEnglish': "I don't want love to dissolve in the wind. Rather, after the wind stops, I wish for it to endure with me in the earth, burn intensely like fire, and for me to merge completely into you.I am a poet who writes about love. My hands, after seeing you, infused love into the very veins of poetry. But will time prevent me from conveying my love directly into your heart?I have no need for the superficial beauty or adornments of a face that wears a hundred masks. Oh, most beautiful one, gift the true beauty of your inner self to this Agathiyan (myself)!Oh, fountain of music that knows no formal notes, will my desire to create music with you be fulfilled?", 'simplifiedTamil': 'அன்பு காற்றில் கரைவது போல் இல்லாமல், காற்று நின்றபின் மண்ணில் என்னோடு நிலைத்து, தீயாய் கொழுந்துவிட்டு எரிந்து, நான் உன்னில் கலந்துவிட வேண்டும்.நான் காதல் பற்றி கவிதைகள் எழுதும் கவிஞன். உன்னைக் கண்ட எனது கைகள் கவிதையின் நரம்புகளில் காதலைப் புகுத்தின. ஆனால், என் காதலை உன் மனதில் சேர்க்க காலம் எனக்குத் தடையாக அமையுமா?நூற்றுக்கணக்கான வேடங்கள் பூசும் முகத்தின் வெளிப்பூச்சு அழகு எனக்குத் தேவையில்லை. உன் உள்ளத்தின் உண்மையான அழகை இந்த அகத்தியனுக்கு பரிசளி, பேரழகியே!ராகங்கள் அறியாத ஒரு இசையருவி போன்றவளே, உன்னோடு சேர்ந்து இசைக்க வேண்டும் என்ற என் ஆசை நிறைவேறுமா?'}}
+2025-09-20 17:41:37,175 [ERROR] Failed to generate embedding
+Traceback (most recent call last):
+  File "D:\SRM-tamil\srm-tamil-master\backend\genai.py", line 65, in generate_embedding
+    res = model.embed_content([text])
+          ^^^^^^^^^^^^^^^^^^^
+AttributeError: 'GenerativeModel' object has no attribute 'embed_content'. Did you mean: 'cached_content'?
+2025-09-20 17:41:37,179 [DEBUG] Saved chat message: who is hero refering in this poem 
+2025-09-20 17:41:37,201 [ERROR] Failed to generate embedding
+Traceback (most recent call last):
+  File "D:\SRM-tamil\srm-tamil-master\backend\genai.py", line 65, in generate_embedding
+    res = model.embed_content([text])
+          ^^^^^^^^^^^^^^^^^^^
+AttributeError: 'GenerativeModel' object has no attribute 'embed_content'. Did you mean: 'cached_content'?
+2025-09-20 17:41:37,203 [DEBUG] Retrieved context for message 'who is hero refering in this poem ': {"simplifiedTamil": "காற்றில் கரைந்து போகும் அன்பு, காற்று அடங்கிய பின்னும், மண்ணில் என்னுடன் கலந்து, காதல் எனும் தீயில் எரிந்து, நான் உன்னுடன் முழுமையாக ஒன்றி மறைய வேண்டும்.", "simplifiedEnglish": "Love that dissolves in the wind. After the wind ceases, I wish to dissolve with me in the earth, burn in the fire of love, and completely disappear into you.", "ilakkanam": {"ezuthu": "The poem primarily utilizes simple, commonly used Tamil letters (Uyirmei letters). There's a subtle use of alliteration (மோனை) in phrases like 'காற்றில் கரையும்', 'காதல் கரைய' and assonance (எதுகை) in 'கரையும்', 'எரிய', 'மறைய', contributing to the poem's sonic appeal.", "sol": "The vocabulary is direct and emotionally charged, combining nouns (அன்பு, காற்று, மண், காதல், தீ), verbs (கரையும், நின்ற, கரைய, எரிய, மறைய வேண்டும்), and particles (பின்பு, இல்). These choices create vivid imagery and convey deep emotional longing effectively.", "porul": "This poem falls under அகப்பொருள் (love theme), specifically `kaadhal` (intense love). Its central theme is the aspiration for an eternal, all-consuming union with the beloved, moving beyond transient existence ('காற்றில் கரையும் அன்பு') towards a profound and complete merging of identities ('மண்ணில் என்னோடு கரைய', 'நான் உன்னில் மறைய வேண்டும்').", "yaappu": "This is a lyrical, short poem resembling free verse, consisting of five lines (அடி) of varying lengths but maintaining a consistent emotional rhythm. It strategically employs மோனை (alliteration) and எதுகை (assonance) to enhance its flow and musicality, rather than adhering to strict classical meters (சீர், தளை).", "ani": "The poem primarily uses உருவகம் (metaphor) in 'காதல் தீயில்' (love is fire), and an implied உவமை (simile) in 'காற்றில் கரையும் அன்பு' (love dissolving like something ephemeral in the wind). The repeated concept of 'கரைய' (dissolving/merging) serves as a subtle சொற்பின்வருநிலையணி, emphasizing the desire for ultimate union. A nuanced contrast (முரண்) is present between transient love (wind) and enduring, merging love (earth)."}}
+
+hi
+
+explain ani ilakanam of above poem
+2025-09-20 17:41:43,699 [DEBUG] Gemini chat reply: இந்த அகப்பொருள் கவிதையில், 'நாயகன்' (hero or speaker) தனது **காதல் துணையை** (beloved) குறிப்பிடுகிறார்.
+
+கவிதையின் மையக்கருவே தனது காதல் துணையுடன் நிரந்தரமான, முழுமையான ஐக்கியத்தை நாடுவதாகும் என்பதை 'பொருள்' பகுதி தெளிவாகக் கூறுகிறது:
+
+> "Its central theme is the aspiration for an eternal, all-consuming union with the **beloved**... towards a profound and complete merging of identities ('நான் உன்னில் மறைய வேண்டும்')."
+
+குறிப்பாக, "நான் உன்னுடன் முழுமையாக ஒன்றி மறைய வேண்டும்" என்ற வரி, தான் விரும்புபவரிடம் (beloved) கரைந்து, அவருடன் ஒன்றாக வேண்டும் என்ற நாயகனின் ஆழமான ஏக்கத்தை வெளிப்படுத்துகிறது. எனவே, இங்கு நாயகன் குறிப்பிடுவது தனது **காதலியையோ** அல்லது **காதலனையோ** ஆகும்.
+2025-09-20 17:41:43,700 [INFO] 127.0.0.1 - - [20/Sep/2025 17:41:43] "POST /chat HTTP/1.1" 200 -
+2025-09-20 17:48:34,211 [INFO] 127.0.0.1 - - [20/Sep/2025 17:48:34] "OPTIONS /analyze-poem HTTP/1.1" 200 -
+2025-09-20 17:48:34,216 [INFO] Received /analyze-poem request: {'prompt': 'காதல் வரக் கவிஞன் நான்,\nஉன்னை கண்ட என் கைகள்\nகவிதையின் நரம்பில் காதலை செலுத்தியும்,\nஎன் காதலை உன் மனதில் செலுத்த\nகாலம் மறுபடும் என்னோ?'}
+2025-09-20 17:48:34,218 [DEBUG] Sending prompt to Gemini: 
+You are a Tamil literary expert.
+Analyze the following poem and return ONLY valid JSON in this structure:
+
+{
+  "simplifiedTamil": "string",
+  "simplifiedEnglish": "string",
+  "ilakkanam": {
+    "ezuthu": "string",
+    "sol": "string",
+    "porul": "string",
+    "yaappu": "string",
+    "ani": "string"
+  }
+}
+
+Poem:
+"""காதல் வரக் கவிஞன் நான்,
+உன்னை கண்ட என் கைகள்
+கவிதையின் நரம்பில் காதலை செலுத்தியும்,
+என் காதலை உன் மனதில் செலுத்த
+காலம் மறுபடும் என்னோ?"""
+
+2025-09-20 17:48:48,578 [DEBUG] Gemini response content: {
+  "simplifiedTamil": "காதல் வரும்போதுதான் நான் கவிஞன் ஆகிறேன். உன்னை கண்டதும் என் கைகள் கவிதையின் உள்ளே காதலைப் புகுத்தின. என் காதலை உன் மனதில் சேர்க்க காலம் தடையாக இருக்குமோ?",
+  "simplifiedEnglish": "I am a poet only when love arrives. My hands, upon seeing you, infused love into the very essence of poetry. Will time, I wonder, obstruct me from conveying my love into your heart?",
+  "ilakkanam": {
+    "ezuthu": "The poem utilizes the standard Tamil script, combining vowels (உயிர் எழுத்துகள்), consonants (மெய் எழுத்துகள்), and their combinations (உயிர்மெய் எழுத்துகள்). No unique or archaic letter forms are present.",
+    "sol": "The poem comprises common Tamil words, including nouns (காதல், கவிஞன், கைகள்), verbs (கண்ட, செலுத்தியும், மறுபடும்), and pronouns (நான், என்). The language is direct and devoid of overly complex vocabulary, emphasizing clarity and emotional expression.",
+    "porul": "The poem falls under the 'அகம்' (inner life) category, focusing on the theme of 'காதல்' (love). It explores the poet's inspiration, which is born from seeing the beloved, and the yearning to convey this love. A central conflict is the apprehension that 'காலம்' (time) might obstruct the realization of this emotional connection.",
+    "yaappu": "The poem does not conform to traditional Tamil prosodic rules (யாப்பு இலக்கணம்) such as fixed meters (வெண்பா, ஆசிரியப்பா) or strict rhyme schemes (மோனை, எதுகை). It is written in a free verse style (வசன கவிதை), characterized by lines of varying lengths and a natural, conversational flow.",
+    "ani": "The poem primarily employs 'உருவகம்' (metaphor) in the phrase 'கவிதையின் நரம்பில் காதலை செலுத்தியும்' (injecting love into the veins of poetry), where the 'veins' represent the lifeblood or essence of poetry, and love is the vital force injected. Additionally, a 'வினா அணி' (rhetorical question) is used in 'காலம் மறுபடும் என்னோ?', to express the poet's apprehension and longing rather than seeking a direct answer."
+  }
+}
+2025-09-20 17:48:48,579 [ERROR] Failed to generate embedding
+Traceback (most recent call last):
+  File "D:\SRM-tamil\srm-tamil-master\backend\genai.py", line 65, in generate_embedding
+    res = model.embed_content([text])
+          ^^^^^^^^^^^^^^^^^^^
+AttributeError: 'GenerativeModel' object has no attribute 'embed_content'. Did you mean: 'cached_content'?
+2025-09-20 17:48:48,582 [INFO] Poem analysis saved to knowledge base
+2025-09-20 17:48:48,583 [INFO] 127.0.0.1 - - [20/Sep/2025 17:48:48] "POST /analyze-poem HTTP/1.1" 200 -
+2025-09-20 17:48:59,975 [INFO] 127.0.0.1 - - [20/Sep/2025 17:48:59] "OPTIONS /chat HTTP/1.1" 200 -
+2025-09-20 17:48:59,981 [INFO] Received /chat request: {'message': 'ப்ரோ உன் பெயர் என்ன', 'poem': 'காதல் வரக் கவிஞன் நான்,\nஉன்னை கண்ட என் கைகள்\nகவிதையின் நரம்பில் காதலை செலுத்தியும்,\nஎன் காதலை உன் மனதில் செலுத்த\nகாலம் மறுபடும் என்னோ?', 'analysis': {'ilakkanam': {'ani': "The poem primarily employs 'உருவகம்' (metaphor) in the phrase 'கவிதையின் நரம்பில் காதலை செலுத்தியும்' (injecting love into the veins of poetry), where the 'veins' represent the lifeblood or essence of poetry, and love is the vital force injected. Additionally, a 'வினா அணி' (rhetorical question) is used in 'காலம் மறுபடும் என்னோ?', to express the poet's apprehension and longing rather than seeking a direct answer.", 'ezuthu': 'The poem utilizes the standard Tamil script, combining vowels (உயிர் எழுத்துகள்), consonants (மெய் எழுத்துகள்), and their combinations (உயிர்மெய் எழுத்துகள்). No unique or archaic letter forms are present.', 'porul': "The poem falls under the 'அகம்' (inner life) category, focusing on the theme of 'காதல்' (love). It explores the poet's inspiration, which is born from seeing the beloved, and the yearning to convey this love. A central conflict is the apprehension that 'காலம்' (time) might obstruct the realization of this emotional connection.", 'sol': 'The poem comprises common Tamil words, including nouns (காதல், கவிஞன், கைகள்), verbs (கண்ட, செலுத்தியும், மறுபடும்), and pronouns (நான், என்). The language is direct and devoid of overly complex vocabulary, emphasizing clarity and emotional expression.', 'yaappu': 'The poem does not conform to traditional Tamil prosodic rules (யாப்பு இலக்கணம்) such as fixed meters (வெண்பா, ஆசிரியப்பா) or strict rhyme schemes (மோனை, எதுகை). It is written in a free verse style (வசன கவிதை), characterized by lines of varying lengths and a natural, conversational flow.'}, 'simplifiedEnglish': 'I am a poet only when love arrives. My hands, upon seeing you, infused love into the very essence of poetry. Will time, I wonder, obstruct me from conveying my love into your heart?', 'simplifiedTamil': 'காதல் வரும்போதுதான் நான் கவிஞன் ஆகிறேன். உன்னை கண்டதும் என் கைகள் கவிதையின் உள்ளே காதலைப் புகுத்தின. என் காதலை உன் மனதில் சேர்க்க காலம் தடையாக இருக்குமோ?'}}
+2025-09-20 17:48:59,982 [ERROR] Failed to generate embedding
+Traceback (most recent call last):
+  File "D:\SRM-tamil\srm-tamil-master\backend\genai.py", line 65, in generate_embedding
+    res = model.embed_content([text])
+          ^^^^^^^^^^^^^^^^^^^
+AttributeError: 'GenerativeModel' object has no attribute 'embed_content'. Did you mean: 'cached_content'?
+2025-09-20 17:48:59,987 [DEBUG] Saved chat message: ப்ரோ உன் பெயர் என்ன
+2025-09-20 17:49:00,008 [ERROR] Failed to generate embedding
+Traceback (most recent call last):
+  File "D:\SRM-tamil\srm-tamil-master\backend\genai.py", line 65, in generate_embedding
+    res = model.embed_content([text])
+          ^^^^^^^^^^^^^^^^^^^
+AttributeError: 'GenerativeModel' object has no attribute 'embed_content'. Did you mean: 'cached_content'?
+2025-09-20 17:49:00,013 [DEBUG] Retrieved context for message 'ப்ரோ உன் பெயர் என்ன': {"simplifiedTamil": "காற்றில் கரைந்து போகும் அன்பு, காற்று அடங்கிய பின்னும், மண்ணில் என்னுடன் கலந்து, காதல் எனும் தீயில் எரிந்து, நான் உன்னுடன் முழுமையாக ஒன்றி மறைய வேண்டும்.", "simplifiedEnglish": "Love that dissolves in the wind. After the wind ceases, I wish to dissolve with me in the earth, burn in the fire of love, and completely disappear into you.", "ilakkanam": {"ezuthu": "The poem primarily utilizes simple, commonly used Tamil letters (Uyirmei letters). There's a subtle use of alliteration (மோனை) in phrases like 'காற்றில் கரையும்', 'காதல் கரைய' and assonance (எதுகை) in 'கரையும்', 'எரிய', 'மறைய', contributing to the poem's sonic appeal.", "sol": "The vocabulary is direct and emotionally charged, combining nouns (அன்பு, காற்று, மண், காதல், தீ), verbs (கரையும், நின்ற, கரைய, எரிய, மறைய வேண்டும்), and particles (பின்பு, இல்). These choices create vivid imagery and convey deep emotional longing effectively.", "porul": "This poem falls under அகப்பொருள் (love theme), specifically `kaadhal` (intense love). Its central theme is the aspiration for an eternal, all-consuming union with the beloved, moving beyond transient existence ('காற்றில் கரையும் அன்பு') towards a profound and complete merging of identities ('மண்ணில் என்னோடு கரைய', 'நான் உன்னில் மறைய வேண்டும்').", "yaappu": "This is a lyrical, short poem resembling free verse, consisting of five lines (அடி) of varying lengths but maintaining a consistent emotional rhythm. It strategically employs மோனை (alliteration) and எதுகை (assonance) to enhance its flow and musicality, rather than adhering to strict classical meters (சீர், தளை).", "ani": "The poem primarily uses உருவகம் (metaphor) in 'காதல் தீயில்' (love is fire), and an implied உவமை (simile) in 'காற்றில் கரையும் அன்பு' (love dissolving like something ephemeral in the wind). The repeated concept of 'கரைய' (dissolving/merging) serves as a subtle சொற்பின்வருநிலையணி, emphasizing the desire for ultimate union. A nuanced contrast (முரண்) is present between transient love (wind) and enduring, merging love (earth)."}}
+
+hi
+
+explain ani ilakanam of above poem
+2025-09-20 17:49:10,463 [DEBUG] Gemini chat reply: வணக்கம்! நான் ஒரு பெரிய மொழி மாதிரி. எனக்குப் பெயர் கிடையாது.
+
+நீங்கள் கேட்ட 'அணி இலக்கணம்' விளக்கம் கீழே கொடுக்கப்பட்டுள்ளது:
+
+இந்தக் கவிதையில் பல அணிகள் சிறப்பாகப் பயன்படுத்தப்பட்டுள்ளன:
+
+1.  **உருவகம் (Metaphor):** 'காதல் தீயில்' என்ற சொற்றொடரில் உருவகம் பயன்படுத்தப்பட்டுள்ளது. காதல் என்பது இங்கே நேரடியாகத் 'தீ'யாக உருவகப்படுத்தப்பட்டுள்ளது. இது காதலின் தீவிரத்தையும், அது எரிக்கும் தன்மையையும், மாற்றும் சக்தியையும் வெளிப்படுத்துகிறது. காதல் தீ போல எல்லாவற்றையும் எரித்து ஒன்றாக்கும் என்ற ஆழமான பொருளைத் தருகிறது.
+
+2.  **உவமை (Simile - implied):** 'காற்றில் கரைந்து போகும் அன்பு' என்பதில் ஒரு மறைமுகமான உவமை உள்ளது. அன்பு என்பது காற்றில் கரைந்து போகும் ஒரு தற்காலிகமான, நிலைத்தன்மையற்ற ஒன்றைப் போல இருக்கிறது என்று ஒப்பிடப்படுகிறது. இது காதலின் ஆரம்ப கால நிலையற்ற தன்மையைக் குறிக்கிறது.
+
+3.  **சொற்பின்வருநிலையணி (Repetition of a word/concept for emphasis):** 'கரைய' (dissolve/merge) என்ற கருத்து கவிதை முழுவதும் மீண்டும் மீண்டும் பயன்படுத்தப்படுகிறது ('காற்றில் கரையும்', 'மண்ணில் என்னுடன் கலந்து', 'நான் உன்னுடன் ஒன்றி மறைய வேண்டும்'). இந்தச் சொல், பேசுபவரின் இறுதி நோக்கம், அதாவது காதலுடன் முழுமையாகக் கலந்து, மறைந்து, ஒன்றுபட்டுப் போக வேண்டும் என்ற ஆழமான விருப்பத்தை வலியுறுத்துகிறது.
+
+4.  **முரண் (Antithesis/Contrast):** 'காற்றில் கரைந்து போகும் அன்பு' (நிலையாமை, தற்காலிகம்) மற்றும் 'மண்ணில் என்னுடன் கலந்து' (நிலையான இணைவு, ஆழம்) ஆகியவற்றுக்கு இடையே ஒரு நுட்பமான முரண்பாடு உள்ளது. இது தற்காலிகமான காதலுக்கும், நிரந்தரமான, ஆழமான, முழுமையான ஒன்றிணைவுக்கான ஏக்கத்திற்கும் இடையிலான வேறுபாட்டைக் காட்டுகிறது.
+2025-09-20 17:49:10,465 [INFO] 127.0.0.1 - - [20/Sep/2025 17:49:10] "POST /chat HTTP/1.1" 200 -
+2025-09-20 18:25:53,560 [INFO] 127.0.0.1 - - [20/Sep/2025 18:25:53] "OPTIONS /analyze-poem HTTP/1.1" 200 -
+2025-09-20 18:25:53,566 [INFO] Received /analyze-poem request: {'prompt': 'இந்தக் கல்வியின் நோக்கம் என்னவெனில் இயற்கையைப் போற்றி, தற்சார்பு வாழ்வியலைக் கடைப்பிடிக்கும் பொறுப்புள்ள, மரியாதைக்குரிய இளைய தலைமுறையை உருவாக்குவதாகும்.'}
+2025-09-20 18:25:53,567 [DEBUG] Sending prompt to Gemini: 
+You are a Tamil literary expert.
+Analyze the following poem and return ONLY valid JSON in this structure:
+
+{
+  "simplifiedTamil": "string",
+  "simplifiedEnglish": "string",
+  "ilakkanam": {
+    "ezuthu": "string",
+    "sol": "string",
+    "porul": "string",
+    "yaappu": "string",
+    "ani": "string"
+  }
+}
+
+Poem:
+"""இந்தக் கல்வியின் நோக்கம் என்னவெனில் இயற்கையைப் போற்றி, தற்சார்பு வாழ்வியலைக் கடைப்பிடிக்கும் பொறுப்புள்ள, மரியாதைக்குரிய இளைய தலைமுறையை உருவாக்குவதாகும்."""
+
+2025-09-20 18:26:12,753 [DEBUG] Gemini response content: {
+  "simplifiedTamil": "இந்தக் கல்வியின் நோக்கம், இயற்கையை மதித்து, தன் தேவைகளைத் தானே பூர்த்தி செய்து வாழும் பொறுப்புள்ள, மரியாதைக்குரிய இளைய தலைமுறையை உருவாக்குவதே ஆகும்.",
+  "simplifiedEnglish": "The purpose of this education is to create a responsible, respectful younger generation that cherishes nature and practices self-sufficient living.",
+  "ilakkanam": {
+    "ezuthu": "இந்த வாக்கியம் உயிர் எழுத்துகள், மெய் எழுத்துகள், உயிர்மெய் எழுத்துகளின் சேர்க்கையாக அமைந்துள்ளது. குறில், நெடில் ஓசைகள் கலந்து வருகின்றன. வல்லினம், மெல்லினம், இடையினம் ஆகிய மூன்று வகை மெய் எழுத்துகளும் பயன்படுத்தப்பட்டுள்ளன.",
+    "sol": "இவ்வாக்கியத்தில் பெயர்ச்சொற்கள் (எ.கா: கல்வி, நோக்கம், இயற்கை, தலைமுறை), வினைச்சொற்கள் (எ.கா: போற்றி, கடைப்பிடிக்கும், உருவாக்குவதாகும்), மற்றும் இடைச்சொற்கள் (எ.கா: -இன், -அப், என்னவெனில்) ஆகியவை கலந்து வந்துள்ளன. உரிச்சொற்கள் நேரடியாகப் பயன்படுத்தப்படவில்லை.",
+    "porul": "இவ்வாக்கியத்தின் பொருள் புறத்திணை சார்ந்ததாகும். இது கல்வியின் நோக்கம், இயற்கைப் பாதுகாப்பு, தற்சார்பு வாழ்வியல், சமூகப் பொறுப்பு போன்ற நன்னெறிக் கருத்துக்களை வலியுறுத்துகிறது.",
+    "yaappu": "இது ஒரு வசன நடை என்பதால், யாப்பிலக்கணக் கூறுகள் (எ.கா: அசை, சீர், தளை, அடி, தொடை) இதில் நேரடியாகப் பொருந்திப் போகாது. இது இலக்கண வரம்புக்குட்பட்ட வசன நடையாகும்.",
+    "ani": "இவ்வாக்கியத்தில் வெளிப்படையான அணிநலன்கள் (எ.கா: உவமை, உருவகம், சிலேடை) எதுவும் இல்லை. இது நேரடியான கருத்தை வெளிப்படுத்தும் எளிய நடையாகும்."
+  }
+}
+2025-09-20 18:26:12,754 [ERROR] Failed to generate embedding
+Traceback (most recent call last):
+  File "D:\SRM-tamil\srm-tamil-master\backend\genai.py", line 65, in generate_embedding
+    res = model.embed_content([text])
+          ^^^^^^^^^^^^^^^^^^^
+AttributeError: 'GenerativeModel' object has no attribute 'embed_content'. Did you mean: 'cached_content'?
+2025-09-20 18:26:12,762 [INFO] Poem analysis saved to knowledge base
+2025-09-20 18:26:12,765 [INFO] 127.0.0.1 - - [20/Sep/2025 18:26:12] "POST /analyze-poem HTTP/1.1" 200 -
+2025-09-20 18:28:16,766 [INFO] 127.0.0.1 - - [20/Sep/2025 18:28:16] "OPTIONS /analyze-poem HTTP/1.1" 200 -
+2025-09-20 18:28:16,772 [INFO] Received /analyze-poem request: {'prompt': 'ஒரு விபத்தினால் உடல் சேதங்கள், மனக் காயங்கள், பொருள் மற்றும் நிதி இழப்பு, மேலும் மரணம் கூட இருபுறமும் நிகழலாம்.'}
+2025-09-20 18:28:16,773 [DEBUG] Sending prompt to Gemini: 
+You are a Tamil literary expert.
+Analyze the following poem and return ONLY valid JSON in this structure:
+
+{
+  "simplifiedTamil": "string",
+  "simplifiedEnglish": "string",
+  "ilakkanam": {
+    "ezuthu": "string",
+    "sol": "string",
+    "porul": "string",
+    "yaappu": "string",
+    "ani": "string"
+  }
+}
+
+Poem:
+"""ஒரு விபத்தினால் உடல் சேதங்கள், மனக் காயங்கள், பொருள் மற்றும் நிதி இழப்பு, மேலும் மரணம் கூட இருபுறமும் நிகழலாம்."""
+
+2025-09-20 18:28:26,740 [DEBUG] Gemini response content: {
+  "simplifiedTamil": "விபத்துகளால் உடல், மனம், செல்வம் பாதிக்கப்பட்டு, உயிரிழப்பும் ஏற்படலாம்.",
+  "simplifiedEnglish": "Accidents can cause physical and mental harm, financial losses, and even death.",
+  "ilakkanam": {
+    "ezuthu": "உயிர், மெய், உயிர்மெய் எழுத்துக்கள் இயல்பாகப் பயன்படுத்தப்பட்டுள்ளன. சிறப்புச் சந்திகள் அல்லது ஓசை நயங்களுக்கான எழுத்துச் சேர்க்கைகள் இல்லை.",
+    "sol": "பெயர்ச்சொற்கள் (விபத்து, உடல், சேதங்கள், காயங்கள், இழப்பு, மரணம்), வினைச்சொற்கள் (நிகழலாம்), இடைச்சொற்கள் (மற்றும், மேலும், கூட, இருபுறமும்) கலந்து பயன்படுத்தப்பட்டுள்ளன. எளிய, நேரடியான சொற்கள் அதிகம்.",
+    "porul": "விபத்தினால் ஏற்படும் உடல், மன, பொருளாதார, உயிரிழப்பு போன்ற எதிர்மறை விளைவுகளை விவரித்து, எச்சரிக்கை உணர்வை உருவாக்குகிறது. இது புறத்திணை சார்ந்த பொதுவான நீதி அல்லது எச்சரிக்கை உணர்த்தும் பொருள் இலக்கண வகையைச் சேர்ந்தது.",
+    "yaappu": "இது ஒரு செய்யுள் அல்ல, உரைநடை வாக்கியம் என்பதால், யாப்பு இலக்கண விதிகளுக்கு உட்படவில்லை. சீர், அடி, தளை, தொடை போன்ற மரபான யாப்பிலக்கணக் கூறுகள் இதில் இல்லை.",
+    "ani": "நேரடியான பொருள் விளக்கத்தைக் கொண்டுள்ளது. உவமை, உருவகம், சிலேடை போன்ற சிறப்பு அணிகள் எதுவும் வெளிப்படையாகப் பயன்படுத்தப்படவில்லை. இயல்பு நவிற்சி அணியின் கூறுகள் இருப்பதாகக் கருதலாம், ஏனெனில் இது நிகழ்வதை உள்ளவாறு கூறுகிறது."
+  }
+}
+2025-09-20 18:28:26,740 [ERROR] Failed to generate embedding
+Traceback (most recent call last):
+  File "D:\SRM-tamil\srm-tamil-master\backend\genai.py", line 65, in generate_embedding
+    res = model.embed_content([text])
+          ^^^^^^^^^^^^^^^^^^^
+AttributeError: 'GenerativeModel' object has no attribute 'embed_content'. Did you mean: 'cached_content'?
+2025-09-20 18:28:26,745 [INFO] Poem analysis saved to knowledge base
+2025-09-20 18:28:26,747 [INFO] 127.0.0.1 - - [20/Sep/2025 18:28:26] "POST /analyze-poem HTTP/1.1" 200 -
+2025-09-20 19:29:34,992 [INFO] 127.0.0.1 - - [20/Sep/2025 19:29:34] "OPTIONS /analyze-poem HTTP/1.1" 200 -
+2025-09-20 19:29:34,999 [INFO] Received /analyze-poem request: {'prompt': 'இந்தக் கல்வியின் நோக்கம் என்னவெனில் இயற்கையைப் போற்றி, தற்சார்பு வாழ்வியலைக் கடைப்பிடிக்கும் பொறுப்புள்ள, மரியாதைக்குரிய இளைய தலைமுறையை உருவாக்குவதாகும்.'}
+2025-09-20 19:29:34,999 [DEBUG] Sending prompt to Gemini: 
+You are a Tamil literary expert.
+Analyze the following poem and return ONLY valid JSON in this structure:
+
+{
+  "simplifiedTamil": "string",
+  "simplifiedEnglish": "string",
+  "ilakkanam": {
+    "ezuthu": "string",
+    "sol": "string",
+    "porul": "string",
+    "yaappu": "string",
+    "ani": "string"
+  }
+}
+
+Poem:
+"""இந்தக் கல்வியின் நோக்கம் என்னவெனில் இயற்கையைப் போற்றி, தற்சார்பு வாழ்வியலைக் கடைப்பிடிக்கும் பொறுப்புள்ள, மரியாதைக்குரிய இளைய தலைமுறையை உருவாக்குவதாகும்."""
+
+2025-09-20 19:29:47,220 [DEBUG] Gemini response content: {
+  "simplifiedTamil": "இக்கல்வியின் நோக்கம் இயற்கையைப் பாதுகாத்து, தற்சார்புடன் வாழும் பொறுப்புள்ள, மரியாதைக்குரிய இளைஞர்களை உருவாக்குவதே ஆகும்.",
+  "simplifiedEnglish": "The aim of this education is to create a responsible, respectable younger generation that reveres nature and practices a self-reliant lifestyle.",
+  "ilakkanam": {
+    "ezuthu": "சரியான தமிழ் எழுத்துக்களும் ஒலிப்பு முறைகளும் பயன்படுத்தப்பட்டுள்ளன.",
+    "sol": "வினைச்சொற்கள் ('உருவாக்குவதாகும்'), பெயர்ச்சொற்கள் ('கல்வி', 'நோக்கம்', 'இயற்கை', 'தலைமுறை'), உரிச்சொற்கள் ('பொறுப்புள்ள', 'மரியாதைக்குரிய', 'இளைய') போன்றவை சரியாகப் பயன்படுத்தப்பட்டு, தெளிவான பொருள் தருகின்றன.",
+    "porul": "கல்வியின் நோக்கம் மற்றும் சமூகப் பொறுப்புணர்வை வலியுறுத்தும் ஒரு பொதுவான கருத்தை உணர்த்துகிறது. இது புறப்பொருள் வகையைச் சேர்ந்த அறவியல் சார்ந்த கருத்தாகும்.",
+    "yaappu": "இது உரைநடை வாக்கியம் என்பதால், யாப்பு இலக்கணம் (சீர், தளை, அடி, தொடை) இதில் பொருந்தாது.",
+    "ani": "நேரடியான, எளிய கூற்று என்பதால், உவமை, உருவகம் போன்ற குறிப்பிட்ட அணி இலக்கணங்கள் இதில் நேரடியாகக் கையாளப்படவில்லை."
+  }
+}
+2025-09-20 19:29:47,228 [ERROR] Failed to generate embedding
+Traceback (most recent call last):
+  File "D:\SRM-tamil\srm-tamil-master\backend\genai.py", line 65, in generate_embedding
+    res = model.embed_content([text])
+          ^^^^^^^^^^^^^^^^^^^
+AttributeError: 'GenerativeModel' object has no attribute 'embed_content'. Did you mean: 'cached_content'?
+2025-09-20 19:29:47,233 [INFO] Poem analysis saved to knowledge base
+2025-09-20 19:29:47,235 [INFO] 127.0.0.1 - - [20/Sep/2025 19:29:47] "POST /analyze-poem HTTP/1.1" 200 -
+2025-09-20 19:31:37,758 [INFO] 127.0.0.1 - - [20/Sep/2025 19:31:37] "OPTIONS /analyze-poem HTTP/1.1" 200 -
+2025-09-20 19:31:37,763 [INFO] Received /analyze-poem request: {'prompt': 'உரமொருவற்கு உள்ள வெறுக்கைஅஃ தில்லார்\nமரம்மக்க ளாதலே வேறு'}
+2025-09-20 19:31:37,763 [DEBUG] Sending prompt to Gemini: 
+You are a Tamil literary expert.
+Analyze the following poem and return ONLY valid JSON in this structure:
+
+{
+  "simplifiedTamil": "string",
+  "simplifiedEnglish": "string",
+  "ilakkanam": {
+    "ezuthu": "string",
+    "sol": "string",
+    "porul": "string",
+    "yaappu": "string",
+    "ani": "string"
+  }
+}
+
+Poem:
+"""உரமொருவற்கு உள்ள வெறுக்கைஅஃ தில்லார்
+மரம்மக்க ளாதலே வேறு"""
+
+2025-09-20 19:32:06,811 [DEBUG] Gemini response content: {
+  "simplifiedTamil": "ஒருவனுக்கு உண்மையான வலிமை என்பது மன உறுதிதான். அந்த மன உறுதி இல்லாதவர்கள், உருவத்தால் மனிதர்களாக இருந்தாலும், அவர்கள் உண்மையில் மரங்களே; வேறுபாடு இல்லை.",
+  "simplifiedEnglish": "A person's true strength is their inner resolve. Those who lack such resolve are no different from trees, even though they possess a human form.",
+  "ilakkanam": {
+    "ezuthu": "The poem uses all standard categories of Tamil letters (உயிர் - vowels, மெய் - consonants, உயிர்மெய் - vowel-consonants). The inclusion of the ஆய்த எழுத்து (āytha eḻuttu) in the word 'அஃது' (aḥthu) is a notable feature.",
+    "sol": "It primarily uses common Tamil words (இயற்சொல் - iyarchaRkol). The vocabulary includes nouns (உரம், வெறுக்கை, மரம், மக்கள்), a participial adjective (உள்ள), and a demonstrative pronoun (அஃது).",
+    "porul": "This Kural falls under the 'அறத்துப்பால்' (Aṟathuppāl - Book of Virtue), specifically dealing with 'ஊக்கமுடைமை' (Ooakamuṭaimai - possession of perseverance/self-reliance). It emphasizes that true human worth and strength lie in mental fortitude rather than mere physical existence.",
+    "yaappu": "It is a குறள் வெண்பா (KuRaḷ Veṇpā), a specific form of வெண்பா (Veṇpā). It consists of two lines: the first with four சீர்கள் (cīr - feet) and the second with three சீர்கள். The last சீர் of the second line is an ஓரசைச்சீர் (ōrasaicchīr - single-syllable foot). The poem generally adheres to இயற்சீர் வெண்டளை (iyaRchīr veṇṭaḷai) and வெண்சீர் வெண்டளை (veṇchīr veṇṭaḷai) as its linking principles (தளை).",
+    "ani": "உருவக அணி (Uruvakka Ani - Metaphor). The phrase 'மரம்மக்கள் ஆதலே வேறு' (marammakka ḷāthalē vēṟu) directly equates humans who lack inner strength to trees. This strong metaphor highlights that, without resolve, humans are as inert and devoid of true life as trees, despite their physical form."
+  }
+}
+2025-09-20 19:32:06,812 [ERROR] Failed to generate embedding
+Traceback (most recent call last):
+  File "D:\SRM-tamil\srm-tamil-master\backend\genai.py", line 65, in generate_embedding
+    res = model.embed_content([text])
+          ^^^^^^^^^^^^^^^^^^^
+AttributeError: 'GenerativeModel' object has no attribute 'embed_content'. Did you mean: 'cached_content'?
+2025-09-20 19:32:06,831 [INFO] Poem analysis saved to knowledge base
+2025-09-20 19:32:06,832 [INFO] 127.0.0.1 - - [20/Sep/2025 19:32:06] "POST /analyze-poem HTTP/1.1" 200 -
+2025-09-20 19:33:46,871 [INFO] 127.0.0.1 - - [20/Sep/2025 19:33:46] "OPTIONS /analyze-poem HTTP/1.1" 200 -
+2025-09-20 19:33:46,876 [INFO] Received /analyze-poem request: {'prompt': 'நறுநிழல் என்று முடியும் நாலசைச் சீர்கள் எட்டும் அசை பிரிக்கையில்\nகனிச் சீராகக் கொள்ளப்படும்'}
+2025-09-20 19:33:46,876 [DEBUG] Sending prompt to Gemini: 
+You are a Tamil literary expert.
+Analyze the following poem and return ONLY valid JSON in this structure:
+
+{
+  "simplifiedTamil": "string",
+  "simplifiedEnglish": "string",
+  "ilakkanam": {
+    "ezuthu": "string",
+    "sol": "string",
+    "porul": "string",
+    "yaappu": "string",
+    "ani": "string"
+  }
+}
+
+Poem:
+"""நறுநிழல் என்று முடியும் நாலசைச் சீர்கள் எட்டும் அசை பிரிக்கையில்
+கனிச் சீராகக் கொள்ளப்படும்"""
+
+2025-09-20 19:34:15,874 [DEBUG] Gemini response content: {
+  "simplifiedTamil": "நான்கு அசைகளைக் கொண்ட சீர்கள், 'நறுநிழல்' (அதாவது 'நிரை நிரை' என்ற அசை அமைப்பு) என்று முடிந்தால், அவை அசைகளாகப் பிரித்துப் பார்க்கும்போது, கனிச்சீர்கள் என அழைக்கப்படும்.",
+  "simplifiedEnglish": "This rule states that any four-syllable metrical foot ('Nālasaiccheer') that concludes with the syllable pattern 'Nirai Nirai' (represented by the mnemonic 'Naṟuniḻal') will be classified as a 'Kanichcheer' (fruit foot) when its constituent syllables are analyzed.",
+  "ilakkanam": {
+    "ezuthu": "இப்பாடலில் பயன்படுத்தப்பட்டுள்ள எழுத்துக்கள் பொதுவான தமிழ் எழுத்துக்களே. 'நறுநிழல்' என்ற சொல்லில் உள்ள எழுத்துக்கள் (ந, று, நி, ழ, ல்) எவ்வாறு அசைப் பிரிப்பிற்கு அடிப்படையாக அமைகின்றன என்பதை இந்த விதி விளக்குகிறது. எழுத்துக்களின் குறில், நெடில், ஒற்றுப் பாகுபாடு அசைப் பிரிப்பில் முக்கியத்துவம் பெறுகிறது.",
+    "sol": "இப்பாடலில் உள்ள சொற்கள் யாப்பிலக்கணத்தின் தொழில்நுட்பப் பதங்களாகும்: 'நறுநிழல்' என்பது 'நிரை நிரை' என்ற அசைக்கான வாய்ப்பாடு. 'நாலசைச் சீர்கள்' என்பது நான்கு அசைகளைக் கொண்ட சீர்களைக் குறிக்கும். 'அசை பிரிக்கையில்' என்பது சீர்களை அவற்றின் அலகுகளான அசைகளாகப் பிரிக்கும் செயலாகும். 'கனிச் சீராகக் கொள்ளப்படும்' என்பது ஒரு குறிப்பிட்ட வகை சீராகக் கருதப்படும் என்பதைக் குறிக்கும். 'என்று முடியும்' மற்றும் 'எட்டும்' போன்ற சொற்கள் விதிக்குத் தேவையான விளக்கங்களைத் தருகின்றன.",
+    "porul": "நான்கு அசைகளைக் கொண்ட சீர்களில், கடைசி இரண்டு அசைகள் 'நிரை நிரை' என்ற அமைப்பில் (அதாவது 'நறுநிழல்' என்ற வாய்ப்பாட்டுக்கு இணையாக) முடிந்தால், அச்சீரை கனிச்சீர் என வகைப்படுத்த வேண்டும் என்பதே இப்பாடலின் பொருள். கனிச்சீர்கள் பொதுவாக மூவசைச் சீர்களாக இருந்தாலும், இந்த விதி, குறிப்பிட்ட வகை நாலசைச் சீர்களைக் கனிச்சீர்களாகக் கொள்ள ஒரு சிறப்பு வரையறையை வழங்குகிறது.",
+    "yaappu": "இப்பாடல் முழுவதும் யாப்பிலக்கணத்தின் ஒரு பகுதியாகும். இது 'சீர்' (metrical foot) வகைகளைப் பற்றியது. குறிப்பாக, 'அசை' (syllable) பிரிப்பு, 'நாலசைச்சீர்' (four-syllable foot), மற்றும் 'கனிச்சீர்' (fruit foot) ஆகிய யாப்பு உறுப்புகளைப் பற்றி வரையறுக்கிறது. 'நறுநிழல்' என்ற வாய்ப்பாடு 'நிரை நிரை' என்ற அசை அமைப்பைக் குறிக்கும் ஒரு குறியீடாகும்.",
+    "ani": "இப்பாடல் ஒரு விதி அல்லது வரையறை என்பதால், இதில் உவமை, உருவகம் போன்ற அணிநலன்கள் எதுவும் பயன்படுத்தப்படவில்லை. இது தகவலைத் தெளிவுபடுத்தும் நோக்கத்துடன் அமைந்த நேரடியான கூற்று."
+  }
+}
+2025-09-20 19:34:15,875 [ERROR] Failed to generate embedding
+Traceback (most recent call last):
+  File "D:\SRM-tamil\srm-tamil-master\backend\genai.py", line 65, in generate_embedding
+    res = model.embed_content([text])
+          ^^^^^^^^^^^^^^^^^^^
+AttributeError: 'GenerativeModel' object has no attribute 'embed_content'. Did you mean: 'cached_content'?
+2025-09-20 19:34:15,894 [INFO] Poem analysis saved to knowledge base
+2025-09-20 19:34:15,895 [INFO] 127.0.0.1 - - [20/Sep/2025 19:34:15] "POST /analyze-poem HTTP/1.1" 200 -
+2025-09-20 19:40:47,771 [INFO] 127.0.0.1 - - [20/Sep/2025 19:40:47] "OPTIONS /analyze-poem HTTP/1.1" 200 -
+2025-09-20 19:40:47,782 [INFO] Received /analyze-poem request: {'prompt': 'நறுநிழல் என்று முடியும் நாலசைச் சீர்கள் எட்டும் அசை பிரிக்கையில்\nகனிச் சீராகக் கொள்ளப்படும்'}
+2025-09-20 19:40:47,784 [DEBUG] Sending prompt to Gemini: 
+You are a Tamil literary expert.
+Analyze the following poem and return ONLY valid JSON in this structure:
+
+{
+  "simplifiedTamil": "string",
+  "simplifiedEnglish": "string",
+  "ilakkanam": {
+    "ezuthu": "string",
+    "sol": "string",
+    "porul": "string",
+    "yaappu": "string",
+    "ani": "string"
+  }
+}
+
+Poem:
+"""நறுநிழல் என்று முடியும் நாலசைச் சீர்கள் எட்டும் அசை பிரிக்கையில்
+கனிச் சீராகக் கொள்ளப்படும்"""
+
+2025-09-20 19:41:43,201 [DEBUG] Gemini response content: {
+  "simplifiedTamil": "நான்கு அசைகளைக் கொண்ட சீர்களில், 'நறுநிழல்' என முடியும் சீர்கள், அவற்றை அசைகளாகப் பிரித்துப் பார்த்தால், 'கனிச் சீர்' என வகைப்படுத்தப்படும் என்று யாப்பிலக்கண விதி கூறுகிறது.",
+  "simplifiedEnglish": "This rule of Tamil prosody (Yaappu Ilakkanam) states that four-syllable metrical feet (Naalasaich CheeR) that conclude with the pattern 'NaRuNiZhal' are, upon analysis of their syllables, classified as 'Kani CheeR'.",
+  "ilakkanam": {
+    "ezuthu": "இப்பகுதி தமிழ் எழுத்துக்களைப் பயன்படுத்தி எழுதப்பட்டுள்ளது. குறில், நெடில், மெய் எழுத்துக்களின் கலவை உள்ளது. 'அசை' என்ற யாப்பிலக்கணப் பகுப்பாய்வுக்கு எழுத்துக்களின் ஓசை மற்றும் அமைப்பு அடிப்படைகளாகும்.",
+    "sol": "இப்பகுதியில் 'நறுநிழல்', 'நாலசைச் சீர்', 'அசை', 'கனிச் சீர்' போன்ற யாப்பிலக்கணத் தொடர்புடைய கலைச்சொற்கள் பயன்படுத்தப்பட்டுள்ளன. 'முடியும்' (பெயரெச்சம்), 'பிரிக்கையில்' (வினையெச்சம்), 'கொள்ளப்படும்' (செயப்பாட்டு வினை) போன்ற வினைச்சொல் வடிவங்களும் உள்ளன. இவை ஒரு விதியை விளக்கும் உரைநடையில் அமைந்துள்ளன.",
+    "porul": "இந்த வரிகள் யாப்பிலக்கணத்தின் ஒரு விதியை வரையறுக்கின்றன. அதாவது, 'நறுநிழல்' என்ற அமைப்பில் முடியும் நான்கு அசைகளைக் கொண்ட சீர்கள், அசைகளாகப் பிரிக்கப்படும்போது 'கனிச் சீர்' வகையைச் சாரும் என்பதாகும். இது ஒரு வகைப்பாட்டு விளக்கமாகும்.",
+    "yaappu": "இது யாப்பிலக்கணத்தின் மிக முக்கியமான பிரிவான சீர் பகுப்பாய்வு பற்றியது. 'நாலசைச் சீர்', 'அசை', 'கனிச் சீர்' ஆகிய கலைச்சொற்கள் இங்குக் கையாளப்படுகின்றன. 'நறுநிழல்' என்பது 'நிரை நிரை' என்ற ஈரசைச் சீரைக் குறிக்கும். 'கனிச் சீர்'கள் பொதுவாக மூவசைச் சீர் + நிரையசை அமைப்பில் அமையும் நாலசைச் சீர்களாகும். இந்த விதி, 'நறுநிழல்' என்று முடியும் நாலசைச் சீர்களை 'கனிச் சீர்'களாக வகைப்படுத்தும் ஒரு நுட்பமான வரையறையைக் கொடுக்கிறது. இது சில சமயங்களில் கனிச்சீர் அமைப்பிற்கான பொதுவான விளக்கத்துடன் குழப்பத்தை ஏற்படுத்தும் ஒரு சிறப்பு விதியாகும்.",
+    "ani": "இப்பகுதி இலக்கிய அணி எதையும் கொண்டிருக்கவில்லை. இது ஒரு இலக்கண விதியை நேரடியான மற்றும் விளக்கமான முறையில் கூறும் உரைநடையாகும்."
+  }
+}
+2025-09-20 19:41:43,202 [ERROR] Failed to generate embedding
+Traceback (most recent call last):
+  File "D:\SRM-tamil\srm-tamil-master\backend\genai.py", line 65, in generate_embedding
+    res = model.embed_content([text])
+          ^^^^^^^^^^^^^^^^^^^
+AttributeError: 'GenerativeModel' object has no attribute 'embed_content'. Did you mean: 'cached_content'?
+2025-09-20 19:41:43,220 [INFO] Poem analysis saved to knowledge base
+2025-09-20 19:41:43,221 [INFO] 127.0.0.1 - - [20/Sep/2025 19:41:43] "POST /analyze-poem HTTP/1.1" 200 -
+2025-09-20 21:22:49,203 [INFO] 127.0.0.1 - - [20/Sep/2025 21:22:49] "OPTIONS /chat HTTP/1.1" 200 -
+2025-09-20 21:22:49,209 [INFO] Received /chat request: {'message': 'what you giving wrong right one is it is yaapilakanam kural paa ', 'poem': 'நறுநிழல் என்று முடியும் நாலசைச் சீர்கள் எட்டும் அசை பிரிக்கையில்\nகனிச் சீராகக் கொள்ளப்படும்', 'analysis': {'ilakkanam': {'ani': 'இப்பகுதி இலக்கிய அணி எதையும் கொண்டிருக்கவில்லை. இது ஒரு இலக்கண விதியை நேரடியான மற்றும் விளக்கமான முறையில் கூறும் உரைநடையாகும்.', 'ezuthu': "இப்பகுதி தமிழ் எழுத்துக்களைப் பயன்படுத்தி எழுதப்பட்டுள்ளது. குறில், நெடில், மெய் எழுத்துக்களின் கலவை உள்ளது. 'அசை' என்ற யாப்பிலக்கணப் பகுப்பாய்வுக்கு எழுத்துக்களின் ஓசை மற்றும் அமைப்பு அடிப்படைகளாகும்.", 'porul': "இந்த வரிகள் யாப்பிலக்கணத்தின் ஒரு விதியை வரையறுக்கின்றன. அதாவது, 'நறுநிழல்' என்ற அமைப்பில் முடியும் நான்கு அசைகளைக் கொண்ட சீர்கள், அசைகளாகப் பிரிக்கப்படும்போது 'கனிச் சீர்' வகையைச் சாரும் என்பதாகும். இது ஒரு வகைப்பாட்டு விளக்கமாகும்.", 'sol': "இப்பகுதியில் 'நறுநிழல்', 'நாலசைச் சீர்', 'அசை', 'கனிச் சீர்' போன்ற யாப்பிலக்கணத் தொடர்புடைய கலைச்சொற்கள் பயன்படுத்தப்பட்டுள்ளன. 'முடியும்' (பெயரெச்சம்), 'பிரிக்கையில்' (வினையெச்சம்), 'கொள்ளப்படும்' (செயப்பாட்டு வினை) போன்ற வினைச்சொல் வடிவங்களும் உள்ளன. இவை ஒரு விதியை விளக்கும் உரைநடையில் அமைந்துள்ளன.", 'yaappu': "இது யாப்பிலக்கணத்தின் மிக முக்கியமான பிரிவான சீர் பகுப்பாய்வு பற்றியது. 'நாலசைச் சீர்', 'அசை', 'கனிச் சீர்' ஆகிய கலைச்சொற்கள் இங்குக் கையாளப்படுகின்றன. 'நறுநிழல்' என்பது 'நிரை நிரை' என்ற ஈரசைச் சீரைக் குறிக்கும். 'கனிச் சீர்'கள் பொதுவாக மூவசைச் சீர் + நிரையசை அமைப்பில் அமையும் நாலசைச் சீர்களாகும். இந்த விதி, 'நறுநிழல்' என்று முடியும் நாலசைச் சீர்களை 'கனிச் சீர்'களாக வகைப்படுத்தும் ஒரு நுட்பமான வரையறையைக் கொடுக்கிறது. இது சில சமயங்களில் கனிச்சீர் அமைப்பிற்கான பொதுவான விளக்கத்துடன் குழப்பத்தை ஏற்படுத்தும் ஒரு சிறப்பு விதியாகும்."}, 'simplifiedEnglish': "This rule of Tamil prosody (Yaappu Ilakkanam) states that four-syllable metrical feet (Naalasaich CheeR) that conclude with the pattern 'NaRuNiZhal' are, upon analysis of their syllables, classified as 'Kani CheeR'.", 'simplifiedTamil': "நான்கு அசைகளைக் கொண்ட சீர்களில், 'நறுநிழல்' என முடியும் சீர்கள், அவற்றை அசைகளாகப் பிரித்துப் பார்த்தால், 'கனிச் சீர்' என வகைப்படுத்தப்படும் என்று யாப்பிலக்கண விதி கூறுகிறது."}}
+2025-09-20 21:22:49,210 [ERROR] Failed to generate embedding
+Traceback (most recent call last):
+  File "D:\SRM-tamil\srm-tamil-master\backend\genai.py", line 65, in generate_embedding
+    res = model.embed_content([text])
+          ^^^^^^^^^^^^^^^^^^^
+AttributeError: 'GenerativeModel' object has no attribute 'embed_content'. Did you mean: 'cached_content'?
+2025-09-20 21:22:49,233 [DEBUG] Saved chat message: what you giving wrong right one is it is yaapilakanam kural paa 
+2025-09-20 21:22:49,246 [ERROR] Failed to generate embedding
+Traceback (most recent call last):
+  File "D:\SRM-tamil\srm-tamil-master\backend\genai.py", line 65, in generate_embedding
+    res = model.embed_content([text])
+          ^^^^^^^^^^^^^^^^^^^
+AttributeError: 'GenerativeModel' object has no attribute 'embed_content'. Did you mean: 'cached_content'?
+2025-09-20 21:22:49,247 [DEBUG] Retrieved context for message 'what you giving wrong right one is it is yaapilakanam kural paa ': {"simplifiedTamil": "காற்றில் கரைந்து போகும் அன்பு, காற்று அடங்கிய பின்னும், மண்ணில் என்னுடன் கலந்து, காதல் எனும் தீயில் எரிந்து, நான் உன்னுடன் முழுமையாக ஒன்றி மறைய வேண்டும்.", "simplifiedEnglish": "Love that dissolves in the wind. After the wind ceases, I wish to dissolve with me in the earth, burn in the fire of love, and completely disappear into you.", "ilakkanam": {"ezuthu": "The poem primarily utilizes simple, commonly used Tamil letters (Uyirmei letters). There's a subtle use of alliteration (மோனை) in phrases like 'காற்றில் கரையும்', 'காதல் கரைய' and assonance (எதுகை) in 'கரையும்', 'எரிய', 'மறைய', contributing to the poem's sonic appeal.", "sol": "The vocabulary is direct and emotionally charged, combining nouns (அன்பு, காற்று, மண், காதல், தீ), verbs (கரையும், நின்ற, கரைய, எரிய, மறைய வேண்டும்), and particles (பின்பு, இல்). These choices create vivid imagery and convey deep emotional longing effectively.", "porul": "This poem falls under அகப்பொருள் (love theme), specifically `kaadhal` (intense love). Its central theme is the aspiration for an eternal, all-consuming union with the beloved, moving beyond transient existence ('காற்றில் கரையும் அன்பு') towards a profound and complete merging of identities ('மண்ணில் என்னோடு கரைய', 'நான் உன்னில் மறைய வேண்டும்').", "yaappu": "This is a lyrical, short poem resembling free verse, consisting of five lines (அடி) of varying lengths but maintaining a consistent emotional rhythm. It strategically employs மோனை (alliteration) and எதுகை (assonance) to enhance its flow and musicality, rather than adhering to strict classical meters (சீர், தளை).", "ani": "The poem primarily uses உருவகம் (metaphor) in 'காதல் தீயில்' (love is fire), and an implied உவமை (simile) in 'காற்றில் கரையும் அன்பு' (love dissolving like something ephemeral in the wind). The repeated concept of 'கரைய' (dissolving/merging) serves as a subtle சொற்பின்வருநிலையணி, emphasizing the desire for ultimate union. A nuanced contrast (முரண்) is present between transient love (wind) and enduring, merging love (earth)."}}
+
+hi
+
+explain ani ilakanam of above poem
+2025-09-20 21:23:10,152 [DEBUG] Gemini chat reply: வணக்கம்!
+
+உங்கள் கேள்விக்கு நான் பதிலளிக்கிறேன். முதலில், நீங்கள் குறிப்பிட்ட யாப்பிலக்கணம் பற்றிய உங்கள் கருத்தை தெளிவுபடுத்துகிறேன்.
+
+**யாப்பிலக்கணம் (Yaappu Ilakkanam) குறித்து:**
+
+நீங்கள் இந்தக் கவிதை ஒரு குறள் பா என்று குறிப்பிட்டீர்கள். ஆனால், கொடுக்கப்பட்ட கவிதையின் அமைப்பு குறள் வெண்பாவின் இலக்கணத்திற்கு முரணானது.
+
+*   **குறள் வெண்பா** என்பது இரண்டு அடிகளைக் கொண்டது. முதல் அடியில் நான்கு சீர்களும், இரண்டாம் அடியில் மூன்று சீர்களும் இடம்பெறும். அத்துடன், வெண்பாவுக்குரிய தளைகள் (இயற்சீர் வெண்டளை, வெண்சீர் வெண்டளை) கண்டிப்பாக அமைந்திருக்க வேண்டும்.
+*   ஆனால், இந்தக் கவிதை **ஐந்து அடிகளைக்** கொண்டிருக்கிறது. அடிகளின் நீளமும் மாறுபடுகிறது. இது ஒரு நவீன கவிதை அல்லது பா வகையைச் சாராத **சுதந்திரப் பா** (free verse) வகையறாவை ஒத்திருக்கிறது. இங்கு உணர்வுக்கும் ஓசைக்கும் முக்கியத்துவம் கொடுக்கப்பட்டுள்ளது, அன்றி சீர், தளை போன்ற மரபிலக்கண விதிகளுக்கு அல்ல.
+
+எனவே, இந்த கவிதை ஒரு குறள் பா அல்ல என்பதை நீங்கள் புரிந்துகொள்ள வேண்டும்.
+
+---
+
+இப்போது, கவிதையின் **அணியிலக்கணம் (Ani Ilakkanam)** பற்றி விரிவாகப் பார்ப்போம்:
+
+இந்தக் கவிதையானது மிக அழகிய உணர்வுகளை வெளிப்படுத்த பல்வேறு அணிகளைப் பயன்படுத்துகிறது.
+
+1.  **உருவகம் (Uruvagham - Metaphor):**
+    *   **விளக்கம்:** இது ஒரு பொருளை வேறொரு பொருளாக உருவகப்படுத்தி, அவை ஒன்றே என்பது போல் கூறுவது. இங்கு உவமானம் உவமேயத்தில் ஐக்கியமாகிவிடும்.
+    *   **கவிதையில்:** "**காதல் எனும் தீயில்** எரிந்து" என்ற தொடரில், 'காதல்' என்பது 'தீ'யாகவே உருவகப்படுத்தப்பட்டுள்ளது. காதல் என்பது ஒரு சுடும் தீ போல, உணர்வுகளைத் தீய்ந்து, முழுமையாக ஒன்றிப்போகச் செய்யும் சக்தி கொண்டது என்பதை இங்குக் காதல் தீயாகவே காட்டப்படுகிறது.
+
+2.  **உவமை (Uvamai - Simile) - உட்கிடந்த உவமை / குறிப்பு உவமை:**
+    *   **விளக்கம்:** ஒரு பொருளை வேறொரு பொருளோடு 'போல', 'அன்ன', 'நிகர' போன்ற உவம உருபுகள் இல்லாமல், ஆனால் அந்த உவமை உணர்த்தப்படும்படி வருவது உட்கிடந்த உவமையாகும்.
+    *   **கவிதையில்:** "**காற்றில் கரைந்து போகும் அன்பு**" என்ற தொடரில், அன்பு காற்றில் கரையும் ஒன்றைப் போல நிலையற்றது, அழியக்கூடியது என்பதை உணர்த்தப்படுகிறது. அன்பு ஒரு திரவம் போல அல்லது ஒரு வாசனை போல காற்றில் கரைந்து போகும் என்று நேரடியாகச் சொல்லப்படாவிட்டாலும், அந்த உவமை உணர்வு இங்குப் பொதிந்துள்ளது.
+
+3.  **முரண் (Muran - Antithesis / Contrast):**
+    *   **விளக்கம்:** ஒன்றுக்கொன்று முரணான, எதிர்மறையான கருத்துக்களை அடுத்தடுத்து அடுக்கி, கருத்துக்கு அழுத்தம் கொடுப்பது.
+    *   **கவிதையில்:**
+        *   "**காற்றில் கரைந்து போகும் அன்பு**" - இது நிலையற்ற, தற்காலிகமான அன்பைக் குறிக்கிறது.
+        *   "**மண்ணில் என்னுடன் கலந்து, நான் உன்னுடன் முழுமையாக ஒன்றி மறைய வேண்டும்**" - இது நிலையான, நீடித்த, பிறப்பிறப்பற்ற, முழுமையான ஐக்கியத்தை, முடிவற்ற அன்பை வெளிப்படுத்துகிறது.
+        *   காற்றின் நிலையாமையையும், மண்ணின் நிலைத்தன்மையையும் முரண்படுத்தி, ஒரு தற்காலிகமான அன்பிலிருந்து ஒரு நித்தியமான அன்புக்கான ஏக்கத்தை இந்தக் கவிதை வெளிப்படுத்துகிறது.
+
+4.  **சொற்பின்வருநிலையணி (Sotpinvarunilaiyani - Repetition of a word for emphasis):**
+    *   **விளக்கம்:** ஒரே சொல் வெவ்வேறு இடங்களில் வந்து ஒரே பொருளைத் தந்து, கருத்துக்கு அழுத்தம் கொடுப்பது. இங்கு `கரை` என்ற மூலச் சொல் வெவ்வேறு வடிவங்களில் வருகிறது.
+    *   **கவிதையில்:** "காற்றில் **கரைந்து** போகும் அன்பு," மற்றும் "மண்ணில் என்னுடன் **கலந்து**," மற்றும் "நான் உன்னுடன் முழுமையாக ஒன்றி **மறைய** வேண்டும்." இங்கு 'கரைதல்', 'கலத்தல்', 'மறைதல்' ஆகிய சொற்கள், அன்பு மெல்ல மெல்ல ஒன்றிப்போகும், அழியும், பின்னர் முழுமையாகக் கலந்துவிடும் என்ற ஒற்றை இலக்கை வெவ்வேறு படிகளில் உணர்த்துவதோடு, இறுதியில் முற்றும் முழுதாக ஒன்றி மறையும் ஏக்கத்தை வலியுறுத்துகிறது.
+
+இந்த அணிகளின் பயன்பாடு கவிதையின் ஆழத்தையும், உணர்வுபூர்வமான ஏக்கத்தையும், நித்தியமான ஐக்கியத்தின் தேடலையும் மிக அழகாகவும், உயிரோட்டமாகவும் வெளிப்படுத்துகிறது.
+2025-09-20 21:23:10,154 [INFO] 127.0.0.1 - - [20/Sep/2025 21:23:10] "POST /chat HTTP/1.1" 200 -
+2025-09-20 21:30:22,821 [INFO]  * Detected change in 'D:\\SRM-tamil\\srm-tamil-master\\backend\\genai.py', reloading
+2025-09-20 21:30:28,378 [INFO] Starting Flask server on port 8000...
+2025-09-20 21:30:28,436 [WARNING]  * Debugger is active!
+2025-09-20 21:30:28,452 [INFO]  * Debugger PIN: 142-604-067
+2025-09-20 21:31:12,316 [INFO] 127.0.0.1 - - [20/Sep/2025 21:31:12] "OPTIONS /chat HTTP/1.1" 200 -
+2025-09-20 21:31:12,325 [INFO] Received /chat request: {'message': 'why it is not kural paa', 'poem': 'நறுநிழல் என்று முடியும் நாலசைச் சீர்கள் எட்டும் அசை பிரிக்கையில்\nகனிச் சீராகக் கொள்ளப்படும்', 'analysis': {'ilakkanam': {'ani': 'இப்பகுதி இலக்கிய அணி எதையும் கொண்டிருக்கவில்லை. இது ஒரு இலக்கண விதியை நேரடியான மற்றும் விளக்கமான முறையில் கூறும் உரைநடையாகும்.', 'ezuthu': "இப்பகுதி தமிழ் எழுத்துக்களைப் பயன்படுத்தி எழுதப்பட்டுள்ளது. குறில், நெடில், மெய் எழுத்துக்களின் கலவை உள்ளது. 'அசை' என்ற யாப்பிலக்கணப் பகுப்பாய்வுக்கு எழுத்துக்களின் ஓசை மற்றும் அமைப்பு அடிப்படைகளாகும்.", 'porul': "இந்த வரிகள் யாப்பிலக்கணத்தின் ஒரு விதியை வரையறுக்கின்றன. அதாவது, 'நறுநிழல்' என்ற அமைப்பில் முடியும் நான்கு அசைகளைக் கொண்ட சீர்கள், அசைகளாகப் பிரிக்கப்படும்போது 'கனிச் சீர்' வகையைச் சாரும் என்பதாகும். இது ஒரு வகைப்பாட்டு விளக்கமாகும்.", 'sol': "இப்பகுதியில் 'நறுநிழல்', 'நாலசைச் சீர்', 'அசை', 'கனிச் சீர்' போன்ற யாப்பிலக்கணத் தொடர்புடைய கலைச்சொற்கள் பயன்படுத்தப்பட்டுள்ளன. 'முடியும்' (பெயரெச்சம்), 'பிரிக்கையில்' (வினையெச்சம்), 'கொள்ளப்படும்' (செயப்பாட்டு வினை) போன்ற வினைச்சொல் வடிவங்களும் உள்ளன. இவை ஒரு விதியை விளக்கும் உரைநடையில் அமைந்துள்ளன.", 'yaappu': "இது யாப்பிலக்கணத்தின் மிக முக்கியமான பிரிவான சீர் பகுப்பாய்வு பற்றியது. 'நாலசைச் சீர்', 'அசை', 'கனிச் சீர்' ஆகிய கலைச்சொற்கள் இங்குக் கையாளப்படுகின்றன. 'நறுநிழல்' என்பது 'நிரை நிரை' என்ற ஈரசைச் சீரைக் குறிக்கும். 'கனிச் சீர்'கள் பொதுவாக மூவசைச் சீர் + நிரையசை அமைப்பில் அமையும் நாலசைச் சீர்களாகும். இந்த விதி, 'நறுநிழல்' என்று முடியும் நாலசைச் சீர்களை 'கனிச் சீர்'களாக வகைப்படுத்தும் ஒரு நுட்பமான வரையறையைக் கொடுக்கிறது. இது சில சமயங்களில் கனிச்சீர் அமைப்பிற்கான பொதுவான விளக்கத்துடன் குழப்பத்தை ஏற்படுத்தும் ஒரு சிறப்பு விதியாகும்."}, 'simplifiedEnglish': "This rule of Tamil prosody (Yaappu Ilakkanam) states that four-syllable metrical feet (Naalasaich CheeR) that conclude with the pattern 'NaRuNiZhal' are, upon analysis of their syllables, classified as 'Kani CheeR'.", 'simplifiedTamil': "நான்கு அசைகளைக் கொண்ட சீர்களில், 'நறுநிழல்' என முடியும் சீர்கள், அவற்றை அசைகளாகப் பிரித்துப் பார்த்தால், 'கனிச் சீர்' என வகைப்படுத்தப்படும் என்று யாப்பிலக்கண விதி கூறுகிறது."}}
+2025-09-20 21:31:12,327 [ERROR] Failed to generate embedding
+Traceback (most recent call last):
+  File "D:\SRM-tamil\srm-tamil-master\backend\genai.py", line 65, in generate_embedding
+    res = model.embed_content([text])
+          ^^^^^^^^^^^^^^^^^^^
+AttributeError: 'GenerativeModel' object has no attribute 'embed_content'. Did you mean: 'cached_content'?
+2025-09-20 21:31:12,333 [DEBUG] Saved chat message: why it is not kural paa
+2025-09-20 21:31:12,355 [ERROR] Failed to generate embedding
+Traceback (most recent call last):
+  File "D:\SRM-tamil\srm-tamil-master\backend\genai.py", line 65, in generate_embedding
+    res = model.embed_content([text])
+          ^^^^^^^^^^^^^^^^^^^
+AttributeError: 'GenerativeModel' object has no attribute 'embed_content'. Did you mean: 'cached_content'?
+2025-09-20 21:31:12,358 [DEBUG] Retrieved context for message 'why it is not kural paa': {"simplifiedTamil": "காற்றில் கரைந்து போகும் அன்பு, காற்று அடங்கிய பின்னும், மண்ணில் என்னுடன் கலந்து, காதல் எனும் தீயில் எரிந்து, நான் உன்னுடன் முழுமையாக ஒன்றி மறைய வேண்டும்.", "simplifiedEnglish": "Love that dissolves in the wind. After the wind ceases, I wish to dissolve with me in the earth, burn in the fire of love, and completely disappear into you.", "ilakkanam": {"ezuthu": "The poem primarily utilizes simple, commonly used Tamil letters (Uyirmei letters). There's a subtle use of alliteration (மோனை) in phrases like 'காற்றில் கரையும்', 'காதல் கரைய' and assonance (எதுகை) in 'கரையும்', 'எரிய', 'மறைய', contributing to the poem's sonic appeal.", "sol": "The vocabulary is direct and emotionally charged, combining nouns (அன்பு, காற்று, மண், காதல், தீ), verbs (கரையும், நின்ற, கரைய, எரிய, மறைய வேண்டும்), and particles (பின்பு, இல்). These choices create vivid imagery and convey deep emotional longing effectively.", "porul": "This poem falls under அகப்பொருள் (love theme), specifically `kaadhal` (intense love). Its central theme is the aspiration for an eternal, all-consuming union with the beloved, moving beyond transient existence ('காற்றில் கரையும் அன்பு') towards a profound and complete merging of identities ('மண்ணில் என்னோடு கரைய', 'நான் உன்னில் மறைய வேண்டும்').", "yaappu": "This is a lyrical, short poem resembling free verse, consisting of five lines (அடி) of varying lengths but maintaining a consistent emotional rhythm. It strategically employs மோனை (alliteration) and எதுகை (assonance) to enhance its flow and musicality, rather than adhering to strict classical meters (சீர், தளை).", "ani": "The poem primarily uses உருவகம் (metaphor) in 'காதல் தீயில்' (love is fire), and an implied உவமை (simile) in 'காற்றில் கரையும் அன்பு' (love dissolving like something ephemeral in the wind). The repeated concept of 'கரைய' (dissolving/merging) serves as a subtle சொற்பின்வருநிலையணி, emphasizing the desire for ultimate union. A nuanced contrast (முரண்) is present between transient love (wind) and enduring, merging love (earth)."}}
+
+hi
+
+explain ani ilakanam of above poem
+2025-09-20 21:31:22,245 [DEBUG] Gemini chat reply: இந்தக் கவிதையின் அணி இலக்கணம் மற்றும் வடிவம் குறித்துப் பார்ப்போம்.
+
+அணி இலக்கணம்:
+இக்கவிதை 'காதல் தீயில்' என்பதில் **உருவக அணி**யையும், 'காற்றில் கரையும் அன்பு' என்பதில் மறைமுகமான **உவமை அணி**யையும் கொண்டுள்ளது. 'கரைய' என்ற சொல் மீண்டும் வந்து ஆழமான ஒன்றிணைதலை வலியுறுத்துவதால், இது ஒரு நுட்பமான **சொற்பின்வருநிலையணி**யாக அமைகிறது. மேலும், நிலையற்ற அன்புக்கும் (காற்று) நிலைத்த அன்புக்குமான (மண்) ஒரு மெல்லிய **முரண் அணி**யும் இதில் உள்ளது.
+
+குறள் பா அல்லாததற்குக் காரணம்:
+இக்கவிதை 'குறள் பா' அல்ல. ஒரு குறள் பா என்பது ஈற்றடி முச்சீராய், மற்ற அடிகளில் நான்கு சீர்களுடன் இரண்டு அடிகளைக் கொண்ட ஒரு குறிப்பிட்ட யாப்புடையது. ஆனால், இக்கவிதை ஐந்து அடிகளைக் கொண்ட, வெவ்வேறு நீளங்களில் அமைந்துள்ள ஒரு தன்னுணர்ச்சிப் பாடலாகும். இது குறிப்பிட்ட யாப்பு விதிகளான சீர், தளைகளைக் கடுமையாகப் பின்பற்றாமல், மோனை, எதுகையைப் பயன்படுத்தி உணர்ச்சி ஓட்டத்திற்கும் இசைமைக்கும் முக்கியத்துவம் தருகிறது.
+2025-09-20 21:31:22,246 [INFO] 127.0.0.1 - - [20/Sep/2025 21:31:22] "POST /chat HTTP/1.1" 200 -
+2025-09-20 21:33:33,254 [INFO]  * Detected change in 'D:\\SRM-tamil\\srm-tamil-master\\backend\\genai.py', reloading
+2025-09-20 21:33:38,090 [INFO] Starting Flask server on port 8000...
+2025-09-20 21:33:38,139 [WARNING]  * Debugger is active!
+2025-09-20 21:33:38,150 [INFO]  * Debugger PIN: 142-604-067
+2025-09-20 21:35:09,599 [INFO] 127.0.0.1 - - [20/Sep/2025 21:35:09] "OPTIONS /analyze-poem HTTP/1.1" 200 -
+2025-09-20 21:35:09,605 [INFO] Received /analyze-poem request: {'prompt': 'Aagayam Thee Piditha Nila Thoonguma\n\nNee Illa Neramella Nenjam Thaangumaa\n\nAagayam Thee Piditha Nila Thoonguma\n\nNee Illa Neramella Nenjam Thaangumaa\n\nSolak Kaatu Bommaikoru Sontham Yaarumilla\n\nKaiya Vittu Kaathal Pona Kaiyil Regayilla\n\nKannukulla Ippo Kadal Kasivatha Paaru\n\nOnnukulla Onnaa Vanthu Seru\n\nKannukulla Ippo Kadal Kasivatha Paaru\n\nOnnukulla Onnaa Vanthu Seru\n\n'}
+2025-09-20 21:35:09,606 [DEBUG] Sending prompt to Gemini: 
+You are a Tamil literary expert.
+Analyze the following poem and return ONLY valid JSON in this structure:
+
+{
+  "simplifiedTamil": "string",
+  "simplifiedEnglish": "string",
+  "ilakkanam": {
+    "ezuthu": "string",
+    "sol": "string",
+    "porul": "string",
+    "yaappu": "string",
+    "ani": "string"
+  }
+}
+
+Poem:
+"""Aagayam Thee Piditha Nila Thoonguma
+
+Nee Illa Neramella Nenjam Thaangumaa
+
+Aagayam Thee Piditha Nila Thoonguma
+
+Nee Illa Neramella Nenjam Thaangumaa
+
+Solak Kaatu Bommaikoru Sontham Yaarumilla
+
+Kaiya Vittu Kaathal Pona Kaiyil Regayilla
+
+Kannukulla Ippo Kadal Kasivatha Paaru
+
+Onnukulla Onnaa Vanthu Seru
+
+Kannukulla Ippo Kadal Kasivatha Paaru
+
+Onnukulla Onnaa Vanthu Seru
+
+"""
+
+2025-09-20 21:35:36,184 [DEBUG] Gemini response content: {
+  "simplifiedTamil": "ஆகாயம் தீ பிடித்த நிலையில் நிலா தூங்குமா? நீ இல்லாத நேரமெல்லாம் என் நெஞ்சம் தாங்குமா? சோளக்காட்டு பொம்மைக்கு எந்த சொந்தமும் இல்லை. கையை விட்டு காதல் போனால், கையில் ரேகைகளும் இல்லை. என் கண்ணுக்குள்ளே இப்போ கடல் போல் கண்ணீர் பெருகுவதைப் பார். ஒன்றுக்குள்ளே ஒன்றாய் வந்து சேர்.",
+  "simplifiedEnglish": "How can the moon sleep when the sky is ablaze? Can my heart endure all the moments without you? A scarecrow in the cornfield has no one to call its own. If love slips from my hand, no lines remain in my palm. See how a sea of tears now flows within my eyes. Come and unite, one within the other.",
+  "ilakkanam": {
+    "ezuthu": "இப்பாடலில் உயிர், மெய், உயிர்மெய் எழுத்துக்கள் கொண்ட தமிழ் எழுத்துருக்கள் கையாளப்பட்டுள்ளன. நவீன தமிழுக்குரிய பேச்சுவழக்கு எழுத்துருப் பயன்பாடு ('கண்ணுக்குள்ள', 'ஒன்னுக்குள்ள ஒன்னா', 'நேரமெல்லாம்' என்பதற்கு 'நேரம்மெல்லா' போன்றவை) காணப்படுகிறது.",
+    "sol": "பொதுவாக, பெயர்ச்சொற்கள் (ஆகாயம், நிலா, நெஞ்சம், காதல், கடல்), வினைச்சொற்கள் (தூங்குமா, தாங்குமா, பாரு, சேரு), இடைச்சொற்கள் (இல்லா, இப்போ, எல்லாம்) ஆகியவை பயன்படுத்தப்பட்டுள்ளன. பேச்சுவழக்குச் சொற்கள் (எ.கா: 'யாருமில்ல' - யாருமில்லை, 'ஒன்னுக்குள்ள ஒன்னா' - ஒன்றுக்குள் ஒன்றாய்) அதிகமாகக் காணப்படுகின்றன. எளிய, நேரடியான சொற்கள் உணர்வுகளை வெளிப்படுத்தப் பயன்படுகின்றன.",
+    "porul": "இது அகப்பொருள் சார்ந்தது. தலைவியின் பிரிவினால் தலைவன் (அன்றி தலைவனின் பிரிவினால் தலைவி) அடையும் துயரத்தையும், தாங்கொணா ஏக்கத்தையும், மீண்டுமொருமுறை இணைய வேண்டும் என்ற அவாவையும் வெளிப்படுத்துகிறது. தனிமை, ஏக்கம், காதல் மற்றும் பிரிவுத் துன்பம் ஆகியவை முதன்மைப் பொருள்களாகும்.",
+    "yaappu": "இப்பாடல் நவீன திரைப்படப் பாடல் அமைப்பைக் கொண்டுள்ளது. இது மரபு யாப்பு விதிகளான பா, அடி, சீர், தளை ஆகியவற்றை இறுக்கமாகப் பின்பற்றாமல், இசைத்தன்மைக்கும் உணர்வுக்கும் முக்கியத்துவம் அளிக்கிறது. ஒவ்வொரு வரியின் இறுதிச் சொற்களிலும் இயைபுத்தொடை (எ.கா: தூங்குமா/தாங்குமா, யாருமில்லா/ரேகையில்லா, பாரு/சேரு) அமைந்துள்ளது. சில இடங்களில் மோனை (எ.கா: கண்ணுக்குள்ள/கடல்/கசிவதா, கை/காதல்/கை) காணப்படுகிறது. பல்லவி-சரணம் போன்ற அமைப்பு முறையும், வரிகளின் மீள்விருப்பமும் (repetition) பாடலுக்குரிய இயல்பை வெளிப்படுத்துகின்றன.",
+    "ani": "இதில் உருவக அணி மற்றும் உயர்வு நவிற்சி அணி சிறப்பாகப் பயன்படுத்தப்பட்டுள்ளது. 'ஆகாயம் தீ பிடித்த நிலை' என்பது பெரும் துன்பத்தின் உருவகமாகும். 'சோளக்காட்டு பொம்மை' என்பது தனிமையின் உருவகம். 'கையை விட்டு காதல் போனால் கையில் ரேகையில்லை' என்பது காதலின் இழப்பு ஏற்படுத்தும் ஆழமான பாதிப்பைக் குறிக்கும் உயர்வு நவிற்சி மற்றும் உருவக அணியாகும். 'கண்ணுக்குள்ள இப்போ கடல் கசிவதைப் பாரு' என்பது கண்ணீரின் பெருக்கத்தை உயர்வு நவிற்சியாகக் கூறும் உருவக அணி. முதல் இரண்டு வரிகள் வினா அணி வகையைச் சார்ந்தது, அதாவது கேள்வி கேட்பதுபோலத் தோன்றும் உணர்ச்சி வெளிப்பாடு."
+  }
+}
+2025-09-20 21:35:36,186 [ERROR] Failed to generate embedding
+Traceback (most recent call last):
+  File "D:\SRM-tamil\srm-tamil-master\backend\genai.py", line 65, in generate_embedding
+    res = model.embed_content([text])
+          ^^^^^^^^^^^^^^^^^^^
+AttributeError: 'GenerativeModel' object has no attribute 'embed_content'. Did you mean: 'cached_content'?
+2025-09-20 21:35:36,192 [INFO] Poem analysis saved to knowledge base
+2025-09-20 21:35:36,194 [INFO] 127.0.0.1 - - [20/Sep/2025 21:35:36] "POST /analyze-poem HTTP/1.1" 200 -
+2025-09-20 23:19:23,987 [INFO] 127.0.0.1 - - [20/Sep/2025 23:19:23] "OPTIONS /chat HTTP/1.1" 200 -
+2025-09-20 23:19:24,006 [INFO] Received /chat request: {'message': 'hi', 'poem': 'ஜில்லா ஜரி கச்சேரிக்கு வாயேண்டி', 'analysis': {'ilakkanam': {'ani': "'ஜில்லா ஜரி' என்பதில் 'ஜ' எனும் ஒலி மீண்டும் வருவதால் இசையணி (ஓசையினிமை) உள்ளது. மேலும், இச்சொற்கூட்டு ஒரு குறிப்பிட்ட நிகழ்வின் தன்மையை உணர்த்தும் ஒருவித சொல்லணி எனலாம்.", 'ezuthu': "தமிழெழுத்துக்களுடன், வடமொழித் தாக்கத்தால் வந்த 'ஜ' போன்ற எழுத்துக்களும் கலந்த ஒலிப்பு. பெரும்பாலும் உயிர்மெய் எழுத்துக்களின் கலவை.", 'porul': 'அகப்பொருள் சார்ந்ததாக, ஒரு காதலன் தன் காதலியை உள்ளூர் விழா அல்லது இசை நிகழ்ச்சிக்கு அன்புடன் அழைப்பதாகப் பொருள் கொள்ளலாம். அன்பும் நெருக்கமும் வெளிப்படுகிறது.', 'sol': "'ஜில்லா', 'ஜரி', 'கச்சேரி' போன்ற வடமொழிச் சொற்களும், 'வாயேண்டி' போன்ற தூய தமிழ் பேச்சுவழக்கு வினைச்சொல்லும் கலந்துள்ளன. நான்காம் வேற்றுமை உருபும் (கு) பயன்படுத்தப்பட்டுள்ளது.", 'yaappu': 'இது மரபு யாப்பிலக்கண விதிகளைக் கொண்ட செய்யுள் அன்று. ஒரு நாட்டுப்புறப் பாடல் அல்லது திரைப்படப் பாடல் வரி போன்று ஒரு தாளநயத்துடன் அமைந்துள்ளது.'}, 'simplifiedEnglish': "This is a simple, colloquial invitation. 'Jilla Jari' is a playful phrase possibly referring to a local, glittering, or lively event. It's an affectionate invitation for a woman to 'come' to a celebration or concert.", 'simplifiedTamil': "இது ஒரு எளிமையான, பேச்சுவழக்கு அழைப்பு. 'ஜில்லா ஜரி' என்பது உள்ளூர், பளபளப்பான அல்லது கலகலப்பான ஒரு நிகழ்வைக் குறிக்கும் ஒரு கேலியான சொற்றொடர். ஒரு பெண்ணை ஒரு கொண்டாட்டத்திற்கோ, கச்சேரிக்கோ அன்புடன் 'வா' என்று அழைப்பதாகும்."}}
+2025-09-20 23:19:24,010 [ERROR] Failed to generate embedding
+Traceback (most recent call last):
+  File "D:\SRM-tamil\srm-tamil-master\backend\genai.py", line 65, in generate_embedding
+    res = model.embed_content([text])
+          ^^^^^^^^^^^^^^^^^^^
+AttributeError: 'GenerativeModel' object has no attribute 'embed_content'. Did you mean: 'cached_content'?
+2025-09-20 23:19:24,030 [DEBUG] Saved chat message: hi
+2025-09-20 23:19:24,051 [ERROR] Failed to generate embedding
+Traceback (most recent call last):
+  File "D:\SRM-tamil\srm-tamil-master\backend\genai.py", line 65, in generate_embedding
+    res = model.embed_content([text])
+          ^^^^^^^^^^^^^^^^^^^
+AttributeError: 'GenerativeModel' object has no attribute 'embed_content'. Did you mean: 'cached_content'?
+2025-09-20 23:19:24,063 [DEBUG] Retrieved context for message 'hi': {"simplifiedTamil": "காற்றில் கரைந்து போகும் அன்பு, காற்று அடங்கிய பின்னும், மண்ணில் என்னுடன் கலந்து, காதல் எனும் தீயில் எரிந்து, நான் உன்னுடன் முழுமையாக ஒன்றி மறைய வேண்டும்.", "simplifiedEnglish": "Love that dissolves in the wind. After the wind ceases, I wish to dissolve with me in the earth, burn in the fire of love, and completely disappear into you.", "ilakkanam": {"ezuthu": "The poem primarily utilizes simple, commonly used Tamil letters (Uyirmei letters). There's a subtle use of alliteration (மோனை) in phrases like 'காற்றில் கரையும்', 'காதல் கரைய' and assonance (எதுகை) in 'கரையும்', 'எரிய', 'மறைய', contributing to the poem's sonic appeal.", "sol": "The vocabulary is direct and emotionally charged, combining nouns (அன்பு, காற்று, மண், காதல், தீ), verbs (கரையும், நின்ற, கரைய, எரிய, மறைய வேண்டும்), and particles (பின்பு, இல்). These choices create vivid imagery and convey deep emotional longing effectively.", "porul": "This poem falls under அகப்பொருள் (love theme), specifically `kaadhal` (intense love). Its central theme is the aspiration for an eternal, all-consuming union with the beloved, moving beyond transient existence ('காற்றில் கரையும் அன்பு') towards a profound and complete merging of identities ('மண்ணில் என்னோடு கரைய', 'நான் உன்னில் மறைய வேண்டும்').", "yaappu": "This is a lyrical, short poem resembling free verse, consisting of five lines (அடி) of varying lengths but maintaining a consistent emotional rhythm. It strategically employs மோனை (alliteration) and எதுகை (assonance) to enhance its flow and musicality, rather than adhering to strict classical meters (சீர், தளை).", "ani": "The poem primarily uses உருவகம் (metaphor) in 'காதல் தீயில்' (love is fire), and an implied உவமை (simile) in 'காற்றில் கரையும் அன்பு' (love dissolving like something ephemeral in the wind). The repeated concept of 'கரைய' (dissolving/merging) serves as a subtle சொற்பின்வருநிலையணி, emphasizing the desire for ultimate union. A nuanced contrast (முரண்) is present between transient love (wind) and enduring, merging love (earth)."}}
+
+hi
+
+explain ani ilakanam of above poem
+2025-09-20 23:19:28,933 [DEBUG] Gemini chat reply: இக்கவிதையில் 'காதல் தீயில்' என்பது உருவக அணியாகவும், 'காற்றில் கரையும் அன்பு' உவம அணியாகவும் அமைந்துள்ளன. 'கரைய' என்ற சொல் மீண்டும் வருவது சொற்பின்வருநிலையணியாகும். நிலையற்ற அன்புக்கும் (காற்று) நீடித்த ஒன்றிணைவுக்கும் (மண்) இடையே உள்ள முரண் அணியும் நுட்பமாகப் பயன்படுத்தப்பட்டுள்ளது.
+2025-09-20 23:19:28,937 [INFO] 127.0.0.1 - - [20/Sep/2025 23:19:28] "POST /chat HTTP/1.1" 200 -
+2025-09-21 00:17:12,182 [INFO] Starting Flask server on port 8000...
+2025-09-21 00:17:13,605 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8000
+ * Running on http://10.9.81.199:8000
+2025-09-21 00:17:13,605 [INFO] [33mPress CTRL+C to quit[0m
+2025-09-21 00:17:13,623 [INFO]  * Restarting with stat
+2025-09-21 00:17:15,687 [INFO] Starting Flask server on port 8000...
+2025-09-21 00:17:15,727 [WARNING]  * Debugger is active!
+2025-09-21 00:17:15,742 [INFO]  * Debugger PIN: 142-604-067
+2025-09-21 00:19:01,001 [INFO] 127.0.0.1 - - [21/Sep/2025 00:19:01] "OPTIONS /analyze-poem HTTP/1.1" 200 -
+2025-09-21 00:19:01,006 [INFO] Received /analyze-poem request: {'prompt': 'காற்றில் கரையும் அன்பு\nகாற்று நின்ற பின்பு,\nமண்ணில் என்னோடு கரைய,\nகாதல் தீயில் எரிய,\nநான் உன்னில் மறைய வேண்டும்.காற்றில் கரையும் அன்பு\nகாற்று நின்ற பின்பு,\nமண்ணில் என்னோடு கரைய,\nகாதல் தீயில் எரிய,\nநான் உன்னில் மறைய வேண்டும்.'}
+2025-09-21 00:19:01,007 [DEBUG] Sending prompt to Gemini: 
+You are a Tamil literary expert.
+Analyze the following poem and return ONLY valid JSON in this structure:
+
+{
+  "simplifiedTamil": "string",
+  "simplifiedEnglish": "string",
+  "ilakkanam": {
+    "ezuthu": "string",
+    "sol": "string",
+    "porul": "string",
+    "yaappu": "string",
+    "ani": "string"
+  }
+}
+
+Poem:
+"""காற்றில் கரையும் அன்பு
+காற்று நின்ற பின்பு,
+மண்ணில் என்னோடு கரைய,
+காதல் தீயில் எரிய,
+நான் உன்னில் மறைய வேண்டும்.காற்றில் கரையும் அன்பு
+காற்று நின்ற பின்பு,
+மண்ணில் என்னோடு கரைய,
+காதல் தீயில் எரிய,
+நான் உன்னில் மறைய வேண்டும்."""
+
+2025-09-21 00:19:27,831 [DEBUG] Gemini response content: {
+  "simplifiedTamil": "அன்பு காற்றில் கரைவது போல், காற்று நின்றதும், என் அன்பு மண்ணில் என்னோடு கரைந்து, காதல் தீயில் எரிந்து, நான் உன்னில் ஒன்றி மறைய வேண்டும்.",
+  "simplifiedEnglish": "Just as love dissolves in the wind, after the wind ceases, I wish for my love to dissolve with me in the earth, to burn in the fire of love, and for me to disappear into you.",
+  "ilakkanam": {
+    "ezuthu": "இக்கவிதையில் உயிர்மெய் எழுத்துக்களே (vowel-consonant letters) பிரதானமாகப் பயன்படுத்தப்பட்டுள்ளன. 'க' (ka) என்ற ஒலி, 'காற்றில்', 'கரையும்', 'காற்று', 'கரைய', 'காதல்' போன்ற சொற்களில் மீண்டும் மீண்டும் வந்து ஒரு மென்மையான ஓசையை உருவாக்குகிறது. வல்லினம், மெல்லினம், இடையினம் ஆகிய மூன்று வகை மெய்யெழுத்துக்களும் சீராகப் பயன்படுத்தப்பட்டு, உணர்வுபூர்வமான தொனியைக் கூட்டுகின்றன.",
+    "sol": "எளிமையான, நேரடியான, உணர்வுபூர்வமான சொற்கள் பயன்படுத்தப்பட்டுள்ளன. 'அன்பு', 'காற்று', 'மண்', 'காதல்', 'தீ' போன்ற பெயர்ச்சொற்கள் பொதுவானவையாக இருந்தாலும், இக்கவிதையில் ஆழமான குறியீட்டுத் தன்மையைப் பெறுகின்றன. 'கரையும்', 'நின்ற', 'கரைய', 'எரிய', 'மறைய வேண்டும்' போன்ற வினைச்சொற்கள் மாற்றத்தையும், உச்சபட்ச விருப்பத்தையும் வெளிப்படுத்துகின்றன. 'கரைய', 'எரிய' போன்ற வினையெச்ச வடிவங்கள் 'வேண்டும்' என்ற சொல்லுடன் இணைந்து, பேசுபவரின் தீவிரமான ஏக்கத்தைப் புலப்படுத்துகின்றன.",
+    "porul": "இக்கவிதை அகத்திணையைச் (love poetry) சார்ந்தது. காதலியுடன் முழுமையான, ஆன்மீக மற்றும் உடல் ரீதியான இணைப்பிற்கான தீவிர ஏக்கமே இதன் மையக் கருத்தாகும். தனிப்பட்ட இருப்பின் எல்லைகளைக் கடந்து, காதலில் கரைந்து ஒன்றிப்போகும் பேராவலை இக்கவிதை வெளிப்படுத்துகிறது. காற்று, மண் போன்ற இயற்கையின் கூறுகள் மற்றும் 'காதல் தீ'யில் கரைவது போன்ற படிமங்கள், தன்னை காதலியில் முற்றிலும் இழக்கும் ஆழமான, அனைத்தையும் உட்கொள்ளும் காதலைக் குறிக்கின்றன.",
+    "yaappu": "இக்கவிதை புதுக்கவிதை (free verse) நடையில் எழுதப்பட்டுள்ளது. இது பாரம்பரிய தமிழ் யாப்பிலக்கண விதிகளான சீர், அசை, தளை, அடி போன்ற எவற்றையும் கண்டிப்பாகப் பின்பற்றவில்லை. வரிகள் குட்டையாகவும், நேரடியான உணர்வு வெளிப்பாட்டிற்கு ஏற்ற வகையிலும் அமைந்துள்ளன. கவிதைக்கு ஒரு இயல்பான, பேச்சு வழக்கு சார்ந்த தாளம் உள்ளதே தவிர, பாரம்பரிய அளப்பார்ந்த ஓசை இல்லை. இதன் அமைப்பு உணர்வின் தீவிரத்தை நேர்மையுடன் வெளிப்படுத்துகிறது.",
+    "ani": "உவமையணி: 'காற்றில் கரையும் அன்பு' (Love dissolves in the wind) - அன்பின் நுட்பமான, பரவும் தன்மையைக் காற்றின் அசைவுடனும், கரைக்கும் சக்தி உடனும் ஒப்பிடுகிறது. உருவக அணி: 'காதல் தீயில் எரிய' (to burn in the fire of love) - காதல் நேரடியாக ஒரு தீயாக உருவகப்படுத்தப்பட்டு, அதன் தீவிரம் மற்றும் உருமாற்றும் சக்தி வலியுறுத்தப்படுகிறது. சுயேற்ற அணி (Imagery): காற்று, மண், தீ போன்றவற்றில் கரையும் காதல், காதலியுடன் மறைந்து ஒன்றிப்போகும் ஆசை போன்ற படிமங்கள் வாசகரின் மனதில் தெளிவான காட்சியை உருவாக்கி, உணர்வுபூர்வமான தாக்கத்தை ஏற்படுத்துகின்றன."
+  }
+}
+2025-09-21 00:19:27,832 [ERROR] Failed to generate embedding
+Traceback (most recent call last):
+  File "D:\SRM-tamil\srm-tamil-master\backend\genai.py", line 65, in generate_embedding
+    res = model.embed_content([text])
+          ^^^^^^^^^^^^^^^^^^^
+AttributeError: 'GenerativeModel' object has no attribute 'embed_content'. Did you mean: 'cached_content'?
+2025-09-21 00:19:27,836 [INFO] Poem analysis saved to knowledge base
+2025-09-21 00:19:27,838 [INFO] 127.0.0.1 - - [21/Sep/2025 00:19:27] "POST /analyze-poem HTTP/1.1" 200 -
+2025-09-21 00:21:40,752 [INFO] 127.0.0.1 - - [21/Sep/2025 00:21:40] "OPTIONS /analyze-poem HTTP/1.1" 200 -
+2025-09-21 00:21:40,756 [INFO] Received /analyze-poem request: {'prompt': 'காற்றில் கரையும் அன்பு\nகாற்று நின்ற பின்பு,\nமண்ணில் என்னோடு கரைய,\nகாதல் தீயில் எரிய,\nநான் உன்னில் மறைய வேண்டும்.காற்றில் கரையும் அன்பு\nகாற்று நின்ற பின்பு,\nமண்ணில் என்னோடு கரைய,\nகாதல் தீயில் எரிய,\nநான் உன்னில் மறைய வேண்டும்.'}
+2025-09-21 00:21:40,757 [DEBUG] Sending prompt to Gemini: 
+You are a Tamil literary expert.
+Analyze the following poem and return ONLY valid JSON in this structure:
+
+{
+  "simplifiedTamil": "string",
+  "simplifiedEnglish": "string",
+  "ilakkanam": {
+    "ezuthu": "string",
+    "sol": "string",
+    "porul": "string",
+    "yaappu": "string",
+    "ani": "string"
+  }
+}
+
+Poem:
+"""காற்றில் கரையும் அன்பு
+காற்று நின்ற பின்பு,
+மண்ணில் என்னோடு கரைய,
+காதல் தீயில் எரிய,
+நான் உன்னில் மறைய வேண்டும்.காற்றில் கரையும் அன்பு
+காற்று நின்ற பின்பு,
+மண்ணில் என்னோடு கரைய,
+காதல் தீயில் எரிய,
+நான் உன்னில் மறைய வேண்டும்."""
+
+2025-09-21 00:21:59,148 [DEBUG] Gemini response content: {
+  "simplifiedTamil": "என் காதல் காற்றில் கரைந்து போவதைப் போல உள்ளது. அந்தக் காற்று அடங்கிய பிறகு, நீயும் என் உயிரோடு மண்ணில் கலந்து கரைய வேண்டும். நம் காதல் தீயைப் போல பிரகாசமாக எரிய வேண்டும்; இறுதியில் நான் உன்னுடன் ஒன்றி, உன்னிலேயே முழுமையாக மறைய வேண்டும் என்பதே என் ஆசை.",
+  "simplifiedEnglish": "Initially, my love feels as fleeting as something dissolving in the wind. But after that transient phase, I wish for you to dissolve with me into the earth, signifying an ultimate, shared end. I want our love to burn intensely like fire, and finally, for me to completely merge and disappear within you, achieving absolute oneness.",
+  "ilakkanam": {
+    "ezuthu": "பொதுவான தமிழ் எழுத்துகள் பயன்படுத்தப்பட்டுள்ளன. ஒலிப்பு முறை எளிமையாகவும், இயல்பாகவும் உள்ளது.",
+    "sol": "சொற்கள் எளிமையானவை, நேரடியானவை, உணர்ச்சிபூர்வமானவை. அன்பு, காதல், காற்று, மண் போன்ற பெயர்ச்சொற்களும், கரையும், நின்ற, கரைய, எரிய, மறைய வேண்டும் போன்ற வினைச்சொற்களும் பயன்படுத்தப்பட்டுள்ளன. உணர்வுகளை வெளிப்படுத்த ஏற்ற சொற்கள்.",
+    "porul": "அகப்பொருள் திணையைச் சார்ந்தது. காதலின் ஆழத்தையும், பரிணாம வளர்ச்சியையும் வெளிப்படுத்துகிறது. காற்றில் கரையும் தற்காலிக அன்பிலிருந்து, மண்ணில் ஒன்றி, தீயெனப் பற்றி எரிந்து, இறுதியில் காதலனிடம் முழுமையாக மறையும் உச்சகட்ட அன்பின் நிலையை விவரிக்கிறது.",
+    "yaappu": "இது புதுக்கவிதை வகையைச் சேர்ந்தது. மரபான யாப்பு விதிகளைக் காட்டிலும், உணர்வு வெளிப்பாட்டிற்கும், ஓசை நயத்திற்கும் முக்கியத்துவம் அளிக்கிறது. கட்டற்ற ஓட்டமும், மென்மையான தாளமும் கொண்டது.",
+    "ani": "உருவகம் (Metaphor): 'காதல் தீ' - காதலைத் தீயுடன் ஒப்பிட்டு அதன் தீவிரத்தையும், அழிவின்மையையும் உணர்த்துகிறது. படிமம் (Imagery): 'காற்றில் கரையும் அன்பு', 'மண்ணில் என்னோடு கரைய', 'காதல் தீயில் எரிய' - இவை காதலின் வெவ்வேறு நிலைகளையும் உணர்வுகளையும் காட்சிப்படுத்துகின்றன."
+  }
+}
+2025-09-21 00:21:59,149 [ERROR] Failed to generate embedding
+Traceback (most recent call last):
+  File "D:\SRM-tamil\srm-tamil-master\backend\genai.py", line 65, in generate_embedding
+    res = model.embed_content([text])
+          ^^^^^^^^^^^^^^^^^^^
+AttributeError: 'GenerativeModel' object has no attribute 'embed_content'. Did you mean: 'cached_content'?
+2025-09-21 00:21:59,172 [INFO] Poem analysis saved to knowledge base
+2025-09-21 00:21:59,173 [INFO] 127.0.0.1 - - [21/Sep/2025 00:21:59] "POST /analyze-poem HTTP/1.1" 200 -
