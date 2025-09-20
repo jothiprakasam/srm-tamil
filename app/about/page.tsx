@@ -70,20 +70,18 @@ export default function AboutPage() {
     { name: "Web Speech API", category: "Voice" },
   ]
 
-  const teamMembers = {
-    en: [
-      { name: "Dr. Meera Krishnan", role: "Tamil Literature Expert", description: "PhD in Classical Tamil Literature" },
-      { name: "Arjun Patel", role: "AI Engineer", description: "Specializes in NLP and Tamil language processing" },
-      { name: "Priya Sharma", role: "UX Designer", description: "Expert in multilingual interface design" },
-      { name: "Karthik Raman", role: "Full Stack Developer", description: "Builds scalable web applications" },
-    ],
-    ta: [
-      { name: "டாக்டர் மீரா கிருஷ்ணன்", role: "தமிழ் இலக்கிய நிபுணர்", description: "செம்மொழி தமிழ் இலக்கியத்தில் முனைவர் பட்டம்" },
-      { name: "அர்ஜுன் பட்டேல்", role: "AI பொறியாளர்", description: "NLP மற்றும் தமிழ் மொழி செயலாக்கத்தில் நிபுணர்" },
-      { name: "பிரியா சர்மா", role: "UX வடிவமைப்பாளர்", description: "பன்மொழி இடைமுக வடிவமைப்பில் நிபுணர்" },
-      { name: "கார்த்திக் ராமன்", role: "முழு அடுக்கு டெவலப்பர்", description: "அளவிடக்கூடிய வலை பயன்பாடுகளை உருவாக்குகிறார்" },
-    ],
-  }
+const teamMembers = {
+  en: [
+    { name: "Sankara Narayana", role: "Full Stack Developer", description: "Specialized in RAG and fine-tuning LLMs" },
+    { name: "Trivikraman T S", role: "AI Engineer", description: "Specializes in NLP and Tamil language processing" },
+    { name: "Jothi Prakasam R", role: "DevOps Engineer", description: "Specialized in Docker and operations" },
+  ],
+  ta: [
+    { name: "சங்கர நாராயணா", role: "முழுமையான ஸ்டாக் டெவலப்பர்", description: "RAG மற்றும் LLMகளை நயமாக்குவதில் சிறப்பு நிபுணர்" },
+    { name: "திருவிக்ரமன் டி எஸ்", role: "ஏஐ பொறியாளர்", description: "NLP மற்றும் தமிழ் மொழி செயலாக்கத்தில் நிபுணர்" },
+    { name: "ஜோதி பிரகாசம் ஆர்", role: "டெவ்ஒப்ஸ் பொறியாளர்", description: "Docker மற்றும் செயல்பாடுகளில் நிபுணர்" },
+  ],
+}
 
   const currentContent = {
     problem: problemContent[language],
