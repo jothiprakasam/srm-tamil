@@ -16,9 +16,11 @@ export default function AnalyzePage() {
   const [isAnalyzing, setIsAnalyzing] = useState(false)
   const [analysisResult, setAnalysisResult] = useState<any>(null)
   const [error, setError] = useState<string | null>(null)
+  const [isRecording, setIsRecording] = useState(false)
 
-  const handleAnalyze = async () => {
-    if (!poemText.trim()) return
+  const handleAnalyze = async (text?: string) => {
+    const inputText = text || poemText
+    if (!inputText.trim()) return
     setIsAnalyzing(true)
     setError(null)
 
@@ -26,7 +28,7 @@ export default function AnalyzePage() {
       const res = await fetch("/api/genai", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ prompt: poemText }),
+        body: JSON.stringify({ prompt: inputText }),
       })
 
       const data = await res.json()
@@ -41,18 +43,74 @@ export default function AnalyzePage() {
     }
   }
 
-  const handleVoiceInput = () => alert("Voice input feature will be implemented with Web Speech API")
-  const handleFileUpload = () => alert("File upload feature for Vattezhuthu will be implemented")
-  const playAudio = (text: string, language: "ta" | "en") => {
-    if ("speechSynthesis" in window) {
-      const utterance = new SpeechSynthesisUtterance(text)
-      utterance.lang = language === "ta" ? "ta-IN" : "en-US"
-      speechSynthesis.speak(utterance)
-    } else {
-      alert("Text-to-speech not supported in this browser")
+  const handleVoiceInput = () => {
+    if (!("webkitSpeechRecognition" in window || "SpeechRecognition" in window)) {
+      alert("Voice input not supported in this browser")
+      return
     }
+
+    const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition
+    const recognition = new SpeechRecognition()
+    recognition.lang = "ta-IN"
+    recognition.interimResults = false
+    recognition.maxAlternatives = 1
+
+    recognition.onstart = () => setIsRecording(true)
+    recognition.onend = () => setIsRecording(false)
+
+    recognition.onresult = (event: any) => {
+      const spokenText = event.results[0][0].transcript
+      setPoemText(spokenText)
+      handleAnalyze(spokenText)
+    }
+
+    recognition.onerror = (event: any) => {
+      console.error("Speech recognition error:", event.error)
+      setError("Voice input failed: " + event.error)
+      setIsRecording(false)
+    }
+
+    recognition.start()
   }
 
+  const handleFileUpload = () => alert("File upload feature for Vattezhuthu will be implemented")
+  
+const playAudio = async (text: string, language: "ta" | "en") => {
+  try {
+    console.log("🔊 Sending TTS request:", { text, language });
+
+    const res = await fetch("/api/poem-chat", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ text, language }),
+    });
+
+    console.log("📡 Response status:", res.status);
+
+    const data = await res.json();
+    console.log("📦 Response JSON:", data);
+
+    if (!res.ok) throw new Error(data.error || "TTS failed");
+
+    if (!data.audio) {
+      throw new Error("No audio returned from API");
+    }
+
+    // Create and play audio
+    const audioSrc = `data:audio/mp3;base64,${data.audio}`;
+    console.log("🎶 Audio source:", audioSrc.slice(0, 100) + "..."); // log first 100 chars
+
+    const audio = new Audio(audioSrc);
+
+    audio.onplay = () => console.log("▶️ Audio playback started");
+    audio.onerror = (e) => console.error("❌ Audio playback error:", e);
+
+    await audio.play();
+  } catch (err: any) {
+    console.error("TTS playback error:", err);
+    alert("Audio playback failed: " + err.message);
+  }
+};
   return (
     <div className="min-h-screen bg-olai bg-cover bg-center text-[#3d2f1b] font-olai">
       <Navigation />
@@ -82,19 +140,29 @@ export default function AnalyzePage() {
               </div>
 
               <div className="flex flex-wrap gap-3">
-                <Button variant="outline" onClick={handleVoiceInput} className="flex items-center gap-2 bg-transparent text-[#3d2f1b] border-[#a1824a] hover:bg-[#a1824a]/10">
+                <Button
+                  variant="outline"
+                  onClick={handleVoiceInput}
+                  className={`flex items-center gap-2 bg-transparent text-[#3d2f1b] border-[#a1824a] hover:bg-[#a1824a]/10 ${
+                    isRecording ? "animate-pulse" : ""
+                  }`}
+                >
                   <Mic className="h-4 w-4" />
-                  {t("analyzer.mic")}
+                  {isRecording ? "Listening..." : t("analyzer.mic")}
                 </Button>
 
-                <Button variant="outline" onClick={handleFileUpload} className="flex items-center gap-2 bg-transparent text-[#3d2f1b] border-[#a1824a] hover:bg-[#a1824a]/10">
+                <Button
+                  variant="outline"
+                  onClick={handleFileUpload}
+                  className="flex items-center gap-2 bg-transparent text-[#3d2f1b] border-[#a1824a] hover:bg-[#a1824a]/10"
+                >
                   <Upload className="h-4 w-4" />
                   {t("analyzer.upload.text")}
                 </Button>
               </div>
 
               <Button
-                onClick={handleAnalyze}
+                onClick={() => handleAnalyze()}
                 disabled={!poemText.trim() || isAnalyzing}
                 className="w-full bg-[#a1824a] hover:bg-[#8f6f3d] text-[#fff8dc]"
               >
