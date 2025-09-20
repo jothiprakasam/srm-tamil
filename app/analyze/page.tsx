@@ -74,38 +74,19 @@ export default function AnalyzePage() {
   }
 
   const handleFileUpload = () => alert("File upload feature for Vattezhuthu will be implemented")
-  
 const playAudio = async (text: string, language: "ta" | "en") => {
   try {
-    console.log("🔊 Sending TTS request:", { text, language });
-
-    const res = await fetch("/api/poem-chat", {
+    const res = await fetch("http://localhost:5000/tts", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ text, language }),
+      body: JSON.stringify({ text }),
     });
 
-    console.log("📡 Response status:", res.status);
-
     const data = await res.json();
-    console.log("📦 Response JSON:", data);
+    if (!res.ok || !data.audio) throw new Error(data.error || "No audio returned");
 
-    if (!res.ok) throw new Error(data.error || "TTS failed");
-
-    if (!data.audio) {
-      throw new Error("No audio returned from API");
-    }
-
-    // Create and play audio
-    const audioSrc = `data:audio/mp3;base64,${data.audio}`;
-    console.log("🎶 Audio source:", audioSrc.slice(0, 100) + "..."); // log first 100 chars
-
-    const audio = new Audio(audioSrc);
-
-    audio.onplay = () => console.log("▶️ Audio playback started");
-    audio.onerror = (e) => console.error("❌ Audio playback error:", e);
-
-    await audio.play();
+    const audio = new Audio(`data:audio/wav;base64,${data.audio}`);
+    audio.play();
   } catch (err: any) {
     console.error("TTS playback error:", err);
     alert("Audio playback failed: " + err.message);
